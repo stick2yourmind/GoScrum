@@ -4,7 +4,7 @@ import {Box, Input, Text, Flex, Heading, Button} from "@chakra-ui/react";
 import {LoginSchema, loginInit} from "../../utils/schema/login";
 
 const Login = () => {
-  const CustomInputComponent = (props) => <Input className="form__input" type="text" {...props} />;
+  const CustomInputComponent = (props) => <Input className="form__input" type={props.type && "text"} {...props} />;
 
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
@@ -17,7 +17,7 @@ const Login = () => {
               <Box className="error">
                 {errors.username && touched.username ? <Text color="tomato">{errors.username}</Text> : null}
               </Box>
-              <Field as={CustomInputComponent} name="password" placeholder="Password" />
+              <Field as={CustomInputComponent} name="password" placeholder="Password" type="password" />
               <Box className="error">
                 {errors.password && touched.password ? <Text color="tomato">{errors.password}</Text> : null}
               </Box>
