@@ -1,11 +1,19 @@
-import { Stack, Text, Box, Flex, Heading } from '@chakra-ui/react'
+import { Stack, Text, Box, Heading } from '@chakra-ui/react'
 
 import Card from './Card'
 import FilterForm from './FilterForm'
 
 const TaskSection = () => {
   return (
-    <Stack bg={{ base: 'white', sm: 'background.200' }} boxShadow={{ sm: 'xl' }} m={4} p="20px" rounded="2xl">
+    <Stack
+      bg={{ base: 'white', sm: 'background.200' }}
+      boxShadow={{ sm: 'xl' }}
+      height="100%"
+      m={4}
+      p="20px"
+      rounded="2xl"
+      width="100%"
+    >
       <Text fontSize="18px" fontWeight="semibold">
         Mis tareas
       </Text>
