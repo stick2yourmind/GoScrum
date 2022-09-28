@@ -8,7 +8,7 @@ const HomeScreen = () => {
   return (
     <>
       <Navbar />
-      <Stack direction={{ base: 'column', xl: 'row' }} height="calc(100vh - 70px)" marginY="10px" paddingX={1}>
+      <Stack direction={{ base: 'column', xl: 'row' }} height="calc(100vh - 90px)" marginY="20px" paddingX={1}>
         <TaskForm />
         <TaskSection />
       </Stack>

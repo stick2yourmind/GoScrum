@@ -19,33 +19,39 @@ const TaskForm = () => {
             <form onSubmit={handleSubmit}>
               <FormLabel fontSize="15px">Crea tus tareas</FormLabel>
               <Stack align="center" direction={{ base: 'column', md: 'row' }} width="100%">
-                <Field as={CustomInputComponent} name="title" placeholder="Título" type="text" />
-                {errors.title && touched.title && (
-                  <Box className="error" pt={2}>
-                    <Text color="tomato">{errors.title}</Text>
-                  </Box>
-                )}
-                <Field as={Select} borderRadius="8px" mt={4} name="state" placeholder="Selecciona un estado">
-                  <option value="nueva">Nueva</option>
-                  <option value="desarrollando">En desarrollo</option>
-                  <option value="finalizada">Finalizado</option>
-                </Field>
+                <Stack width="100%">
+                  <Field as={CustomInputComponent} name="title" placeholder="Título" type="text" />
+                  {errors.title && touched.title && (
+                    <Box className="error" pt={2}>
+                      <Text color="tomato">{errors.title}</Text>
+                    </Box>
+                  )}
+                </Stack>
+                <Stack width="100%">
+                  <Field as={Select} borderRadius="8px" name="state" placeholder="Selecciona un estado">
+                    <option value="nueva">Nueva</option>
+                    <option value="desarrollando">En desarrollo</option>
+                    <option value="finalizada">Finalizado</option>
+                  </Field>
 
-                {errors.state && touched.state && (
-                  <Box className="error" pt={2}>
-                    <Text color="tomato">{errors.state}</Text>
-                  </Box>
-                )}
-                <Field as={Select} borderRadius="8px" mt={4} name="priority" placeholder="Selecciona una prioridad">
-                  <option value="alta">Alta</option>
-                  <option value="media">Media</option>
-                  <option value="baja">Baja</option>
-                </Field>
-                {errors.priority && touched.priority && (
-                  <Box className="error" pt={2}>
-                    <Text color="tomato">{errors.priority}</Text>
-                  </Box>
-                )}
+                  {errors.state && touched.state && (
+                    <Box className="error" pt={2}>
+                      <Text color="tomato">{errors.state}</Text>
+                    </Box>
+                  )}
+                </Stack>
+                <Stack width="100%">
+                  <Field as={Select} borderRadius="8px" name="priority" placeholder="Selecciona una prioridad">
+                    <option value="alta">Alta</option>
+                    <option value="media">Media</option>
+                    <option value="baja">Baja</option>
+                  </Field>
+                  {errors.priority && touched.priority && (
+                    <Box className="error" pt={2}>
+                      <Text color="tomato">{errors.priority}</Text>
+                    </Box>
+                  )}
+                </Stack>
               </Stack>
               <Field as={Textarea} h={140} mt={4} name="description" placeholder="Descripción" type="text" />
               {errors.description && touched.description && (

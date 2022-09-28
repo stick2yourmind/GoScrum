@@ -7,7 +7,7 @@ const Navbar = () => {
     <Stack
       align="center"
       bg="#FFFFFF"
-      boxShadow="2xl"
+      boxShadow="md"
       direction="row"
       fontSize={{ base: '13px', sm: '15px' }}
       fontWeight="semibold"
