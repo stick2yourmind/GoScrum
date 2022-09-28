@@ -26,7 +26,7 @@ const TaskForm = () => {
 
   return (
     <Flex align="center" justify="center">
-      <Box bg="white" p={6} rounded="md" w={"lg"} fontSize={16}>
+      <Box p={6} rounded="md" w={"lg"} fontSize={16}>
         <Heading as="h1" fontSize="24px" mb={15}>
           Crear Tarea
         </Heading>
