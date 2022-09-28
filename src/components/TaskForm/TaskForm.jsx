@@ -104,6 +104,8 @@ const TaskForm = () => {
                     border: "2px",
                   }}
                   bg="primary.100"
+                  mt={4}
+                  w="100%"
                   color="background.300"
                   type="submit"
                 >
