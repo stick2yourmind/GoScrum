@@ -11,7 +11,7 @@ export const TaskSchema = Yup.object().shape({
   priority: Yup.string().required("Prioridad requerido"),
   state: Yup.string().required("Estado requerido"),
   description: Yup.string()
-    .required("Título de tarea requerido")
+    .required("Descripción de la tarea requerida")
     .min(5, "La descripción debe tener 5 caracteres como mínimo"),
 });
 
