@@ -31,11 +31,11 @@
       "warn",
       {
         "printWidth": 120,
-        "trailingComma": "all",
+        "trailingComma": "none",
         "tabWidth": 2,
-        "semi": true,
-        "singleQuote": false,
-        "bracketSpacing": false,
+        "semi": false,
+        "singleQuote": true,
+        "bracketSpacing": true,
         "arrowParens": "always",
         "endOfLine":"auto"
       }
