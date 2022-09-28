@@ -1,12 +1,13 @@
-import Login from './components/Login'
-import Register from './components/Register'
+import Login from "./components/Login";
+import Register from "./components/Register";
+import TaskForm from "./components/TaskForm/TaskForm";
 
 function App() {
   return (
     <div>
-      <Register />
+      <TaskForm />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
