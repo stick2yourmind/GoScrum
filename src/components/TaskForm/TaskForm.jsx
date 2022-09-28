@@ -97,13 +97,20 @@ const TaskForm = () => {
               )}
               <Flex align="center" justify="center">
                 <Button
-                  colorScheme="purple"
+                  _hover={{
+                    bg: "background.300",
+                    color: "primary.100",
+                    borderColor: "primary.100",
+                    border: "2px",
+                  }}
+                  bg="primary.100"
+                  color="background.300"
                   type="submit"
                   variant="outline"
                   width="full"
                   mt={4}
                 >
-                  Ingresar
+                  Crear
                 </Button>
               </Flex>
             </form>
