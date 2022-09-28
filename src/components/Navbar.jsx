@@ -41,7 +41,8 @@ const Navbar = () => {
         color="white"
         fontSize={{ base: '12px', sm: '15px' }}
         h={{ base: '15px', sm: '25px' }}
-        w={{ base: '35px', sm: '35px' }}
+        size="xs"
+        w={{ sm: '35px' }}
       >
         X
       </Button>

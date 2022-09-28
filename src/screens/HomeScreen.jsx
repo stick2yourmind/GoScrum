@@ -1,10 +1,11 @@
 import Navbar from '../components/Navbar'
+import TaskSection from '../components/TaskSection'
 
 const HomeScreen = () => {
   return (
     <>
       <Navbar />
-      <h1>HomeScreen</h1>
+      <TaskSection />
     </>
   )
 }
