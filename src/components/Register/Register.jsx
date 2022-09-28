@@ -1,5 +1,5 @@
 import { Field, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, Select } from '@chakra-ui/react'
+import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
 
 import { LoginSchema, loginInit } from '../../utils/schema/login'
 
@@ -21,6 +21,12 @@ const Register = () => {
               <Box className="error">
                 {errors.password && touched.password ? <Text color="tomato">{errors.password}</Text> : null}
               </Box>
+              <Flex>
+                <Switch id="email-alerts" />
+                <FormLabel htmlFor="email-alerts" mb="0">
+                  ¿Perteneces a un equipo ya creado?
+                </FormLabel>
+              </Flex>
               <Select placeholder="Selecciona rol">
                 <option value="option1">Team Member</option>
                 <option value="option2">Team Leader</option>
