@@ -9,13 +9,13 @@ const Navbar = () => {
       bg="#FFFFFF"
       boxShadow="2xl"
       direction="row"
-      fontSize="15px"
+      fontSize={{ base: '13px', sm: '15px' }}
       fontWeight="semibold"
       h="50px"
-      paddingX="20px"
-      spacing={10}
+      paddingX={{ base: '5px', sm: '20px' }}
+      spacing={{ base: 2, sm: 10 }}
     >
-      <Image alt="GoScrum Logo" h="20px" src={Logo} w="80px" />
+      <Image alt="GoScrum Logo" h={{ base: '15px', sm: '20px' }} src={Logo} w={{ base: '60px', sm: '80px' }} />
       <Spacer />
       <Button
         _hover={{ bg: 'white', color: 'primary.100', border: '2px', borderColor: 'primary.100' }}
@@ -24,7 +24,9 @@ const Navbar = () => {
         borderColor="primary.100"
         boxShadow="dark-lg"
         color="white"
-        h="25px"
+        fontSize={{ base: '12px', sm: '15px' }}
+        h={{ base: '15px', sm: '25px' }}
+        w={{ base: '35px', sm: '80px' }}
       >
         Donar
       </Button>
@@ -37,7 +39,9 @@ const Navbar = () => {
         borderColor="primary.100"
         boxShadow="dark-lg"
         color="white"
-        h="35px"
+        fontSize={{ base: '12px', sm: '15px' }}
+        h={{ base: '15px', sm: '25px' }}
+        w={{ base: '35px', sm: '35px' }}
       >
         X
       </Button>
