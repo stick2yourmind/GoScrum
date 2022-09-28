@@ -106,9 +106,6 @@ const TaskForm = () => {
                   bg="primary.100"
                   color="background.300"
                   type="submit"
-                  variant="outline"
-                  width="full"
-                  mt={4}
                 >
                   Crear
                 </Button>
