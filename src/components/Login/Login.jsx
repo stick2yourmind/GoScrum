@@ -4,8 +4,6 @@ import { Box, Input, Text, Flex, Heading, Button } from '@chakra-ui/react'
 import { LoginSchema, loginInit } from '../../utils/schema/login'
 
 const Login = () => {
-  const CustomInputComponent = (props) => <Input className="form__input" type={props.type && 'text'} {...props} />
-
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
       <Box bg="white" p={6} rounded="md" w={'lg'}>
@@ -13,15 +11,19 @@ const Login = () => {
         <Formik initialValues={loginInit} validationSchema={LoginSchema} onSubmit={(values) => console.info(values)}>
           {({ errors, touched, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
-              <Field as={CustomInputComponent} name="username" placeholder="Username" type="text" />
-              <Box className="error">
-                {errors.username && touched.username ? <Text color="tomato">{errors.username}</Text> : null}
-              </Box>
-              <Field as={CustomInputComponent} name="password" placeholder="Password" type="password" />
-              <Box className="error">
-                {errors.password && touched.password ? <Text color="tomato">{errors.password}</Text> : null}
-              </Box>
-              <Flex align="center" justify="center">
+              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
+              {errors.username && touched.username && (
+                <Box>
+                  <Text color="tomato">{errors.username}</Text>
+                </Box>
+              )}
+              <Field as={Input} my={2} name="password" placeholder="Password" type="password" />
+              {errors.password && touched.password && (
+                <Box>
+                  <Text color="tomato">{errors.password}</Text>
+                </Box>
+              )}
+              <Flex align="center" justify="center" my={4}>
                 <Button colorScheme="purple" type="submit" variant="outline" width="full">
                   Ingresar
                 </Button>

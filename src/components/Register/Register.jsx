@@ -34,13 +34,15 @@ const Register = () => {
               )}
               <Flex my={2}>
                 <Switch
+                  my={2}
                   name="hasTeam"
+                  px={2}
                   onChange={(e) => {
                     setHasTeam(e.target.checked)
                     setFieldValue('hasTeam', e.target.checked)
                   }}
                 />
-                <FormLabel htmlFor="email-alerts" mb="0">
+                <FormLabel alignSelf="center" htmlFor="email-alerts" mb="0">
                   ¿Perteneces a un equipo ya creado?
                 </FormLabel>
               </Flex>
@@ -85,7 +87,7 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
-              <Flex align="center" justify="center">
+              <Flex align="center" justify="center" my={4}>
                 <Button colorScheme="purple" type="submit" variant="outline" width="full">
                   Registrar
                 </Button>
