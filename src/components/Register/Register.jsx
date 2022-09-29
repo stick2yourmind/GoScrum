@@ -6,7 +6,6 @@ import { RegisterSchema, registerInit } from '../../utils/schema/register'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState('')
-  const CustomInputComponent = (props) => <Input className="form__input" type={props.type && 'text'} {...props} />
 
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
@@ -15,22 +14,25 @@ const Register = () => {
         <Formik
           initialValues={registerInit}
           validationSchema={RegisterSchema}
-          onSubmit={(values, action) => {
+          onSubmit={(values) => {
             console.info(values)
-            console.info(action)
           }}
         >
           {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (
             <form onSubmit={handleSubmit}>
-              <Field as={CustomInputComponent} name="username" placeholder="Username" type="text" />
-              <Box className="error">
-                {errors.username && touched.username ? <Text color="tomato">{errors.username}</Text> : null}
-              </Box>
-              <Field as={CustomInputComponent} name="password" placeholder="Password" type="password" />
-              <Box className="error">
-                {errors.password && touched.password ? <Text color="tomato">{errors.password}</Text> : null}
-              </Box>
-              <Flex>
+              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
+              {errors.username && touched.username && (
+                <Box>
+                  <Text color="tomato">{errors.username}</Text>
+                </Box>
+              )}
+              <Field as={Input} my={2} name="password" placeholder="Password" type="password" />
+              {errors.password && touched.password && (
+                <Box>
+                  <Text color="tomato">{errors.password}</Text>
+                </Box>
+              )}
+              <Flex my={2}>
                 <Switch
                   name="hasTeam"
                   onChange={(e) => {
@@ -44,23 +46,32 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={CustomInputComponent} name="team" placeholder="Ingrese id del equipo" type="text" />
-                  <Box className="error">
-                    {errors.team && touched.team ? <Text color="tomato">{errors.team}</Text> : null}
-                  </Box>
+                  <Field as={Input} my={2} name="team" placeholder="Ingrese id del equipo" type="text" />
+                  {errors.team && touched.team && (
+                    <Box>
+                      <Text color="tomato">{errors.team}</Text>
+                    </Box>
+                  )}
                 </>
               )}
-              <Select
-                as="select"
+              <Field
+                as={Select}
+                my={2}
                 placeholder="Selecciona rol"
                 onBlur={() => setFieldTouched('rol', true)}
                 onChange={(e) => setFieldValue('rol', e.target.value)}
               >
                 <option value="Team Member">Team Member</option>
                 <option value="Team Leader">Team Leader</option>
-              </Select>
-              <Box className="error">{errors.rol && touched.rol ? <Text color="tomato">{errors.rol}</Text> : null}</Box>
-              <Select
+              </Field>
+              {errors.rol && touched.rol && (
+                <Box>
+                  <Text color="tomato">{errors.rol}</Text>
+                </Box>
+              )}
+              <Field
+                as={Select}
+                my={2}
                 placeholder="Selecciona continente"
                 onBlur={() => setFieldTouched('continent', true)}
                 onChange={(e) => setFieldValue('continent', e.target.value)}
@@ -68,10 +79,12 @@ const Register = () => {
                 <option value="America">America</option>
                 <option value="Europa">Europa</option>
                 <option value="Asia">Asia</option>
-              </Select>
-              <Box className="error">
-                {errors.continent && touched.continent ? <Text color="tomato">{errors.continent}</Text> : null}
-              </Box>
+              </Field>
+              {errors.continent && touched.continent && (
+                <Box>
+                  <Text color="tomato">{errors.continent}</Text>
+                </Box>
+              )}
               <Flex align="center" justify="center">
                 <Button colorScheme="purple" type="submit" variant="outline" width="full">
                   Registrar
