@@ -1,12 +1,20 @@
 import { Field, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Textarea, Stack } from '@chakra-ui/react'
+import { useDispatch } from 'react-redux'
 
 import { TaskSchema, loginInit } from '../../utils/schema/taskForm'
+import { setTasks } from '../../store/slices/tasks'
 
 const TaskForm = () => {
+  const dispatch = useDispatch()
+
   const CustomInputComponent = (props) => (
     <Input borderRadius="8px" className="form__input" type={props.type && 'text'} {...props} />
   )
+
+  const handleSubmit = (values) => {
+    dispatch(setTasks(values))
+  }
 
   return (
     <Flex width="100%">
@@ -14,7 +22,7 @@ const TaskForm = () => {
         <Heading as="h1" fontSize="24px" mb={15}>
           Crear Tarea
         </Heading>
-        <Formik initialValues={loginInit} validationSchema={TaskSchema} onSubmit={(values) => console.info(values)}>
+        <Formik initialValues={loginInit} validationSchema={TaskSchema} onSubmit={handleSubmit}>
           {({ errors, touched, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               <FormLabel fontSize="15px">Crea tus tareas</FormLabel>
