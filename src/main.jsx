@@ -1,13 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { Provider } from "react-redux";
-import App from "./App";
-import { store } from "./store";
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { ChakraProvider } from '@chakra-ui/react'
 
-import { ChakraProvider } from "@chakra-ui/react";
-import { theme } from "./theme/theme";
+import App from './App'
+import { store } from './store'
+import { theme } from './theme/theme'
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
       <ChakraProvider theme={theme}>
@@ -15,4 +15,4 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       </ChakraProvider>
     </Provider>
   </React.StrictMode>
-);
+)
