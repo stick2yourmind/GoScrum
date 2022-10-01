@@ -1,12 +1,22 @@
-import Navbar from "../components/Navbar";
+import { Stack } from "@chakra-ui/react";
+
+import Navbar from "../components/Navbar/Navbar";
+import TaskSection from "../components/TaskSection/TaskSection";
 import TaskForm from "../components/TaskForm/TaskForm";
 
 const HomeScreen = () => {
   return (
     <>
       <Navbar />
-      <h1>HomeScreen</h1>
-      <TaskForm />
+      <Stack
+        direction={{ base: "column", xl: "row" }}
+        height="calc(100vh - 90px)"
+        marginY="20px"
+        paddingX={1}
+      >
+        <TaskForm />
+        <TaskSection />
+      </Stack>
     </>
   );
 };

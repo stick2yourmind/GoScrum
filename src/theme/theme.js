@@ -1,6 +1,24 @@
 import { extendTheme } from '@chakra-ui/react'
 
 export const theme = extendTheme({
+  components: {
+    Badge: {
+      baseStyle: {
+        textTransform: 'lowercase',
+        textAlign: 'center',
+        container: {
+          textAlign: 'center'
+        }
+      }
+    },
+    Radio: {
+      baseStyle: {
+        container: {
+          touchAction: 'none'
+        }
+      }
+    }
+  },
   colors: {
     background: {
       100: '#E5E5E5',
