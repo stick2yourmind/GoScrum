@@ -1,73 +1,46 @@
-import { Field, Formik } from "formik";
-import {
-  Box,
-  Input,
-  Text,
-  Flex,
-  Heading,
-  Button,
-  Select,
-  FormLabel,
-  Switch,
-} from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { Field, Formik } from 'formik'
+import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { RegisterSchema, registerInit } from "../../utils/schema/register";
-
-import { getRegisterData } from "../../store/slices/registerData";
-import { useDispatch, useSelector } from "react-redux";
+import { RegisterSchema, registerInit } from '../../utils/schema/register'
+import { getRegisterData } from '../../store/slices/registerData'
 
 const Register = () => {
-  const [hasTeam, setHasTeam] = useState("");
+  const [hasTeam, setHasTeam] = useState('')
 
-  const dispatch = useDispatch();
-  const { registerData } = useSelector((state) => state.registerData);
+  const dispatch = useDispatch()
+  const { registerData } = useSelector((state) => state.registerData)
 
   useEffect(() => {
-    dispatch(getRegisterData());
-  }, []);
+    dispatch(getRegisterData())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  const { Rol, continente, region } = registerData;
+  const { Rol, continente, region } = registerData
+
+  console.log(region)
 
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
-      <Box bg="white" p={6} rounded="md" w={"lg"}>
+      <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
           validationSchema={RegisterSchema}
           onSubmit={(values) => {
-            console.info(values);
+            console.info(values)
           }}
         >
-          {({
-            errors,
-            touched,
-            handleSubmit,
-            setFieldValue,
-            setFieldTouched,
-            values,
-          }) => (
+          {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched, values }) => (
             <form onSubmit={handleSubmit}>
-              <Field
-                as={Input}
-                my={2}
-                name="username"
-                placeholder="Username"
-                type="text"
-              />
+              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
                 <Box>
                   <Text color="tomato">{errors.username}</Text>
                 </Box>
               )}
-              <Field
-                as={Input}
-                my={2}
-                name="password"
-                placeholder="Password"
-                type="password"
-              />
+              <Field as={Input} my={2} name="password" placeholder="Password" type="password" />
               {errors.password && touched.password && (
                 <Box>
                   <Text color="tomato">{errors.password}</Text>
@@ -79,8 +52,8 @@ const Register = () => {
                   name="hasTeam"
                   px={2}
                   onChange={(e) => {
-                    setHasTeam(e.target.checked);
-                    setFieldValue("hasTeam", e.target.checked);
+                    setHasTeam(e.target.checked)
+                    setFieldValue('hasTeam', e.target.checked)
                   }}
                 />
                 <FormLabel alignSelf="center" htmlFor="email-alerts" mb="0">
@@ -89,13 +62,7 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field
-                    as={Input}
-                    my={2}
-                    name="team"
-                    placeholder="Ingrese id del equipo"
-                    type="text"
-                  />
+                  <Field as={Input} my={2} name="team" placeholder="Ingrese id del equipo" type="text" />
                   {errors.team && touched.team && (
                     <Box>
                       <Text color="tomato">{errors.team}</Text>
@@ -107,9 +74,9 @@ const Register = () => {
                 as={Select}
                 my={2}
                 placeholder="Selecciona rol"
-                onBlur={() => setFieldTouched("rol", true)}
-                onChange={(e) => setFieldValue("rol", e.target.value)}
                 value={values.rol}
+                onBlur={() => setFieldTouched('rol', true)}
+                onChange={(e) => setFieldValue('rol', e.target.value)}
               >
                 {Rol?.map((rol, index) => (
                   <option key={index} value={rol}>
@@ -126,9 +93,9 @@ const Register = () => {
                 as={Select}
                 my={2}
                 placeholder="Selecciona continente"
-                onBlur={() => setFieldTouched("continent", true)}
-                onChange={(e) => setFieldValue("continent", e.target.value)}
                 value={values.continent}
+                onBlur={() => setFieldTouched('continent', true)}
+                onChange={(e) => setFieldValue('continent', e.target.value)}
               >
                 {continente?.map((continente, index) => (
                   <option key={index} value={continente}>
@@ -142,12 +109,7 @@ const Register = () => {
                 </Box>
               )}
               <Flex align="center" justify="center" my={4}>
-                <Button
-                  colorScheme="purple"
-                  type="submit"
-                  variant="outline"
-                  width="full"
-                >
+                <Button colorScheme="purple" type="submit" variant="outline" width="full">
                   Registrar
                 </Button>
               </Flex>
@@ -156,7 +118,7 @@ const Register = () => {
         </Formik>
       </Box>
     </Flex>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register
