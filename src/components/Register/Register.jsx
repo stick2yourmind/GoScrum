@@ -65,7 +65,7 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={Input} name="team" placeholder="Ingrese id del equipo" type="text" />
+                  <Field as={Input} mt={4} name="team" placeholder="Ingrese id del equipo" type="text" />
                   {errors.team && touched.team && (
                     <Box>
                       <Text color="tomato">{errors.team}</Text>
@@ -121,10 +121,16 @@ const Register = () => {
               <Field
                 as={Select}
                 placeholder="Selecciona una región"
+                value={values.region}
                 onBlur={() => setFieldTouched('region', true)}
                 onChange={(e) => setFieldValue('region', e.target.value)}
               >
-                <option value="America">América latina</option>
+                {region?.map((region, index) => (
+                  <option key={index} value={region}>
+                    {region}
+                  </option>
+                ))}
+
                 <option value="America">América del norte</option>
                 <option value="America">Brasil</option>
               </Field>
