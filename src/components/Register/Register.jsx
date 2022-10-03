@@ -32,7 +32,7 @@ const Register = () => {
         >
           {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched, values }) => (
             <form onSubmit={handleSubmit}>
-              <FormLabel mb={0} mt={2}>
+              <FormLabel mb={0} mt={4}>
                 Nombre de usuario
               </FormLabel>
               <Field as={Input} name="username" placeholder="Username" type="text" />
@@ -41,7 +41,7 @@ const Register = () => {
                   <Text color="tomato">{errors.username}</Text>
                 </Box>
               )}
-              <FormLabel mb={0} mt={2}>
+              <FormLabel mb={0} mt={4}>
                 Contraseña
               </FormLabel>
               <Field as={Input} name="password" placeholder="Password" type="password" />
@@ -50,9 +50,8 @@ const Register = () => {
                   <Text color="tomato">{errors.password}</Text>
                 </Box>
               )}
-              <Flex my={2}>
+              <Flex mt={4}>
                 <Switch
-                  my={2}
                   name="hasTeam"
                   pr={2}
                   onChange={(e) => {
@@ -74,7 +73,7 @@ const Register = () => {
                   )}
                 </>
               )}
-              <FormLabel mb={0} mt={2}>
+              <FormLabel mb={0} mt={4}>
                 Rol
               </FormLabel>
               <Field
@@ -95,7 +94,7 @@ const Register = () => {
                   <Text color="tomato">{errors.rol}</Text>
                 </Box>
               )}
-              <FormLabel mb={0} mt={2}>
+              <FormLabel mb={0} mt={4}>
                 Continente
               </FormLabel>
               <Field
@@ -116,7 +115,7 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
-              <FormLabel mb={0} mt={2}>
+              <FormLabel mb={0} mt={4}>
                 Región
               </FormLabel>
               <Field
@@ -134,7 +133,7 @@ const Register = () => {
                   <Text color="tomato">{errors.region}</Text>
                 </Box>
               )}
-              <Flex align="center" justify="center" my={4}>
+              <Flex align="center" justify="center" mb={2} mt={4}>
                 <Button
                   _hover={{
                     bg: 'background.300',
