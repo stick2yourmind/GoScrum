@@ -1,11 +1,25 @@
 import { Field, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { RegisterSchema, registerInit } from '../../utils/schema/register'
+import { getRegisterData } from '../../store/slices/registerData'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState('')
+
+  const dispatch = useDispatch()
+  const { registerData } = useSelector((state) => state.registerData)
+
+  useEffect(() => {
+    dispatch(getRegisterData())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const { Rol, continente, region } = registerData
+
+  console.log(region)
 
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
@@ -18,7 +32,7 @@ const Register = () => {
             console.info(values)
           }}
         >
-          {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched }) => (
+          {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched, values }) => (
             <form onSubmit={handleSubmit}>
               <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
@@ -60,11 +74,15 @@ const Register = () => {
                 as={Select}
                 my={2}
                 placeholder="Selecciona rol"
+                value={values.rol}
                 onBlur={() => setFieldTouched('rol', true)}
                 onChange={(e) => setFieldValue('rol', e.target.value)}
               >
-                <option value="Team Member">Team Member</option>
-                <option value="Team Leader">Team Leader</option>
+                {Rol?.map((rol, index) => (
+                  <option key={index} value={rol}>
+                    {rol}
+                  </option>
+                ))}
               </Field>
               {errors.rol && touched.rol && (
                 <Box>
@@ -75,12 +93,15 @@ const Register = () => {
                 as={Select}
                 my={2}
                 placeholder="Selecciona continente"
+                value={values.continent}
                 onBlur={() => setFieldTouched('continent', true)}
                 onChange={(e) => setFieldValue('continent', e.target.value)}
               >
-                <option value="America">America</option>
-                <option value="Europa">Europa</option>
-                <option value="Asia">Asia</option>
+                {continente?.map((continente, index) => (
+                  <option key={index} value={continente}>
+                    {continente}
+                  </option>
+                ))}
               </Field>
               {errors.continent && touched.continent && (
                 <Box>
