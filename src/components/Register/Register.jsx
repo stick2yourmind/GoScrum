@@ -18,8 +18,8 @@ const Register = () => {
   const [hasTeam, setHasTeam] = useState("");
 
   return (
-    <Flex align="center" bg="gray.100" h="100vh" justify="center">
-      <Box bg="white" p={6} rounded="md" w={"lg"}>
+    <Flex align="center" bg="white" h="100vh" justify="center">
+      <Box p={6} rounded="md" w={"lg"}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
