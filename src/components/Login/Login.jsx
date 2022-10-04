@@ -1,14 +1,26 @@
 import { Field, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button } from '@chakra-ui/react'
+import { useDispatch } from 'react-redux'
 
 import { LoginSchema, loginInit } from '../../utils/schema/login'
+import { loginUser } from '../../store/slices/registerData'
 
 const Login = () => {
+  const dispatch = useDispatch()
+
+  const onSubmit = (user, password) => {
+    dispatch(loginUser(user, password))
+  }
+
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
       <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Iniciar sesión</Heading>
-        <Formik initialValues={loginInit} validationSchema={LoginSchema} onSubmit={(values) => console.info(values)}>
+        <Formik
+          initialValues={loginInit}
+          validationSchema={LoginSchema}
+          onSubmit={(values) => onSubmit(values.username, values.password)}
+        >
           {({ errors, touched, handleSubmit }) => (
             <form onSubmit={handleSubmit}>
               <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
