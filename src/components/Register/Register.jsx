@@ -19,11 +19,9 @@ const Register = () => {
 
   const { Rol, continente, region } = registerData
 
-  console.log(region)
-
   return (
-    <Flex align="center" bg="gray.100" h="100vh" justify="center">
-      <Box bg="white" p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg="white" h="100vh" justify="center">
+      <Box p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
@@ -34,23 +32,28 @@ const Register = () => {
         >
           {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched, values }) => (
             <form onSubmit={handleSubmit}>
-              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
+              <FormLabel mb={0} mt={4}>
+                Nombre de usuario
+              </FormLabel>
+              <Field as={Input} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
                 <Box>
                   <Text color="tomato">{errors.username}</Text>
                 </Box>
               )}
-              <Field as={Input} my={2} name="password" placeholder="Password" type="password" />
+              <FormLabel mb={0} mt={4}>
+                Contraseña
+              </FormLabel>
+              <Field as={Input} name="password" placeholder="Password" type="password" />
               {errors.password && touched.password && (
                 <Box>
                   <Text color="tomato">{errors.password}</Text>
                 </Box>
               )}
-              <Flex my={2}>
+              <Flex mt={4}>
                 <Switch
-                  my={2}
                   name="hasTeam"
-                  px={2}
+                  pr={2}
                   onChange={(e) => {
                     setHasTeam(e.target.checked)
                     setFieldValue('hasTeam', e.target.checked)
@@ -62,7 +65,7 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={Input} my={2} name="team" placeholder="Ingrese id del equipo" type="text" />
+                  <Field as={Input} mt={4} name="team" placeholder="Ingrese id del equipo" type="text" />
                   {errors.team && touched.team && (
                     <Box>
                       <Text color="tomato">{errors.team}</Text>
@@ -70,10 +73,12 @@ const Register = () => {
                   )}
                 </>
               )}
+              <FormLabel mb={0} mt={4}>
+                Rol
+              </FormLabel>
               <Field
                 as={Select}
-                my={2}
-                placeholder="Selecciona rol"
+                placeholder="Selecciona un rol"
                 value={values.rol}
                 onBlur={() => setFieldTouched('rol', true)}
                 onChange={(e) => setFieldValue('rol', e.target.value)}
@@ -89,10 +94,12 @@ const Register = () => {
                   <Text color="tomato">{errors.rol}</Text>
                 </Box>
               )}
+              <FormLabel mb={0} mt={4}>
+                Continente
+              </FormLabel>
               <Field
                 as={Select}
-                my={2}
-                placeholder="Selecciona continente"
+                placeholder="Selecciona un continente"
                 value={values.continent}
                 onBlur={() => setFieldTouched('continent', true)}
                 onChange={(e) => setFieldValue('continent', e.target.value)}
@@ -108,8 +115,46 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
-              <Flex align="center" justify="center" my={4}>
-                <Button colorScheme="purple" type="submit" variant="outline" width="full">
+              <FormLabel mb={0} mt={4}>
+                Región
+              </FormLabel>
+              <Field
+                as={Select}
+                placeholder="Selecciona una región"
+                value={values.region}
+                onBlur={() => setFieldTouched('region', true)}
+                onChange={(e) => setFieldValue('region', e.target.value)}
+              >
+                {region?.map((region, index) => (
+                  <option key={index} value={region}>
+                    {region}
+                  </option>
+                ))}
+
+                <option value="America">América del norte</option>
+                <option value="America">Brasil</option>
+              </Field>
+              {errors.region && touched.region && (
+                <Box>
+                  <Text color="tomato">{errors.region}</Text>
+                </Box>
+              )}
+              <Flex align="center" justify="center" mb={2} mt={4}>
+                <Button
+                  _hover={{
+                    bg: 'background.300',
+                    color: 'primary.100',
+                    borderColor: 'primary.100',
+                    border: '2px'
+                  }}
+                  bg="primary.100"
+                  border="2px"
+                  borderColor="primary.100"
+                  color="background.300"
+                  size="sm"
+                  type="submit"
+                  width="full"
+                >
                   Registrar
                 </Button>
               </Flex>
