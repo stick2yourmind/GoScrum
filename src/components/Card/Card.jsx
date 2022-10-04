@@ -1,17 +1,40 @@
+import { useDrag } from 'react-dnd'
+import { useEffect } from 'react'
 import { Stack, Text, Button, Box, Heading, Badge } from '@chakra-ui/react'
 
-const Card = () => {
+const Card = ({ task }) => {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: 'card',
+    item: { cardId: 1 },
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+      handlerId: monitor.getHandlerId()
+    })
+  }))
+
+  console.log(task)
+
   return (
-    <Box borderColor="gray.300" borderWidth="1px" p={5} rounded="xl" shadow="md" w="100%">
+    <Box
+      ref={drag}
+      borderColor="gray.300"
+      borderWidth="1px"
+      mt={2}
+      p={5}
+      rounded="xl"
+      shadow="md"
+      sx={{ cursor: 'move' }}
+      w="100%"
+    >
       <Stack align="center" direction="row" justify="space-between">
-        <Heading fontSize="15px">Hola</Heading>
+        <Heading fontSize="15px">{task.taskData.title}</Heading>
         <Button size="xs">X</Button>
       </Stack>
       <Text fontSize="11px" fontWeight="semibold">
         6/3/2022, 1:44:26 hs.
       </Text>
       <Text fontSize="14px" fontWeight="semibold">
-        User
+        {task.taskData.user}
       </Text>
       <Stack direction="row" flexWrap="wrap">
         <Badge bg="badges.new" color="white" fontSize="10px" rounded="md" size="sm">
