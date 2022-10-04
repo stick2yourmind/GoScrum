@@ -152,9 +152,11 @@ const Register = () => {
               )}
               {values.continent === 'America' && (
                 <>
+                  <FormLabel mb={0} mt={4}>
+                    Región
+                  </FormLabel>
                   <Field
                     as={Select}
-                    mt={4}
                     placeholder="Selecciona Region"
                     value={values.region}
                     onBlur={() => setFieldTouched('region', true)}
