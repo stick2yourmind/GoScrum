@@ -20,7 +20,7 @@ const Register = () => {
   const { Rol, continente, region } = registerData
 
   return (
-    <Flex align="center" bg="white" h="100vh" justify="center">
+    <Flex align="center" bg="white" h="full" justify="center">
       <Box p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
