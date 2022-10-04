@@ -16,11 +16,11 @@ const Register = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const registerUser = async ({ username, password, email, teamID, rol: role, continent, region }) => {
+  const registerUser = async ({ userName, password, email, teamID, role, continent, region }) => {
     try {
       const resp = await authApi.post('/auth/register', {
         user: {
-          userName: username,
+          userName,
           password,
           email,
           teamID,
@@ -61,10 +61,10 @@ const Register = () => {
               <FormLabel mb={0} mt={4}>
                 Nombre de usuario
               </FormLabel>
-              <Field as={Input} name="username" placeholder="Username" type="text" />
-              {errors.username && touched.username && (
+              <Field as={Input} name="userName" placeholder="Username" type="text" />
+              {errors.userName && touched.userName && (
                 <Box>
-                  <Text color="tomato">{errors.username}</Text>
+                  <Text color="tomato">{errors.userName}</Text>
                 </Box>
               )}
               <FormLabel mb={0} mt={4}>
@@ -114,9 +114,9 @@ const Register = () => {
               <Field
                 as={Select}
                 placeholder="Selecciona un rol"
-                value={values.rol}
-                onBlur={() => setFieldTouched('rol', true)}
-                onChange={(e) => setFieldValue('rol', e.target.value)}
+                value={values.role}
+                onBlur={() => setFieldTouched('role', true)}
+                onChange={(e) => setFieldValue('role', e.target.value)}
               >
                 {Rol?.map((rol, index) => (
                   <option key={index} value={rol}>
@@ -124,9 +124,9 @@ const Register = () => {
                   </option>
                 ))}
               </Field>
-              {errors.rol && touched.rol && (
+              {errors.role && touched.role && (
                 <Box>
-                  <Text color="tomato">{errors.rol}</Text>
+                  <Text color="tomato">{errors.role}</Text>
                 </Box>
               )}
               <FormLabel mb={0} mt={4}>
