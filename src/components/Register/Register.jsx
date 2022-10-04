@@ -50,6 +50,15 @@ const Register = () => {
                   <Text color="tomato">{errors.password}</Text>
                 </Box>
               )}
+              <FormLabel mb={0} mt={4}>
+                Email
+              </FormLabel>
+              <Field as={Input} name="email" placeholder="Email" type="text" />
+              {errors.email && touched.email && (
+                <Box>
+                  <Text color="tomato">{errors.email}</Text>
+                </Box>
+              )}
               <Flex mt={4}>
                 <Switch
                   name="hasTeam"
