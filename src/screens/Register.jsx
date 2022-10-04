@@ -3,6 +3,7 @@ import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } fr
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { RegisterSchema, registerInit } from '../utils/schema/register'
 import { getRegisterData } from '../store/slices/authSlice'
@@ -175,6 +176,11 @@ const Register = () => {
             </Form>
           )}
         </Formik>
+        <Link replace={true} to="/auth/">
+          <Text color="#6B46C1" fontWeight="semibold" textAlign="end">
+            Ya tengo una cuenta
+          </Text>
+        </Link>
       </Box>
     </Flex>
   )

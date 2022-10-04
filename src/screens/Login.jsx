@@ -1,6 +1,7 @@
 import { Field, Form, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { LoginSchema, loginInit } from '../utils/schema/login'
 import { loginUser } from '../store/slices/authSlice'
@@ -43,6 +44,11 @@ const Login = () => {
             </Form>
           )}
         </Formik>
+        <Link replace={true} to="/auth/register">
+          <Text color="#6B46C1" fontWeight="semibold" textAlign="end">
+            Crear una cuenta
+          </Text>
+        </Link>
       </Box>
     </Flex>
   )
