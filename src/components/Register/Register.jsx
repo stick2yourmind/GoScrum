@@ -1,10 +1,11 @@
-import { Field, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RegisterSchema, registerInit } from '../../utils/schema/register'
 import { getRegisterData } from '../../store/slices/registerData'
+import authApi from '../../api/authApi'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState('')
@@ -12,14 +13,34 @@ const Register = () => {
   const dispatch = useDispatch()
   const { registerData } = useSelector((state) => state.registerData)
 
+  const registerUser = async ({ username, password, email, teamID, rol: role, continent, region }) => {
+    try {
+      const resp = await authApi.post('/auth/register', {
+        user: {
+          userName: username,
+          password,
+          email,
+          teamID,
+          role,
+          continent,
+          region
+        }
+      })
+
+      if (resp.status === 201) {
+        console.log(resp)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   useEffect(() => {
     dispatch(getRegisterData())
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { Rol, continente, region } = registerData
-
-  console.log(region)
 
   return (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
@@ -29,11 +50,11 @@ const Register = () => {
           initialValues={registerInit}
           validationSchema={RegisterSchema}
           onSubmit={(values) => {
-            console.info(values)
+            registerUser(values)
           }}
         >
-          {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched, values }) => (
-            <form onSubmit={handleSubmit}>
+          {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
+            <Form>
               <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
                 <Box>
@@ -44,6 +65,12 @@ const Register = () => {
               {errors.password && touched.password && (
                 <Box>
                   <Text color="tomato">{errors.password}</Text>
+                </Box>
+              )}
+              <Field as={Input} my={2} name="email" placeholder="Email" type="email" />
+              {errors.email && touched.email && (
+                <Box>
+                  <Text color="tomato">{errors.email}</Text>
                 </Box>
               )}
               <Flex my={2}>
@@ -62,10 +89,10 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={Input} my={2} name="team" placeholder="Ingrese id del equipo" type="text" />
-                  {errors.team && touched.team && (
+                  <Field as={Input} my={2} name="teamID" placeholder="Ingrese id del equipo" type="text" />
+                  {errors.teamID && touched.teamID && (
                     <Box>
-                      <Text color="tomato">{errors.team}</Text>
+                      <Text color="tomato">{errors.teamID}</Text>
                     </Box>
                   )}
                 </>
@@ -108,12 +135,36 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
+              {values.continent === 'America' && (
+                <>
+                  <Field
+                    as={Select}
+                    my={2}
+                    placeholder="Selecciona Region"
+                    value={values.region}
+                    onBlur={() => setFieldTouched('region', true)}
+                    onChange={(e) => setFieldValue('region', e.target.value)}
+                  >
+                    {region?.map((region, index) => (
+                      <option key={region + index} value={region}>
+                        {region}
+                      </option>
+                    ))}
+                  </Field>
+                  {errors.region && touched.region && (
+                    <Box>
+                      <Text color="tomato">{errors.region}</Text>
+                    </Box>
+                  )}
+                </>
+              )}
+
               <Flex align="center" justify="center" my={4}>
                 <Button colorScheme="purple" type="submit" variant="outline" width="full">
                   Registrar
                 </Button>
               </Flex>
-            </form>
+            </Form>
           )}
         </Formik>
       </Box>

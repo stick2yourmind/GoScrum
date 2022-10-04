@@ -2,9 +2,9 @@ import axios from 'axios'
 
 const baseURL = 'https://goscrum-api.alkemy.org'
 
-const goScrumApi = axios.create({ baseURL })
+const tasksApi = axios.create({ baseURL })
 
-goScrumApi.interceptors.request.use((config) => {
+tasksApi.interceptors.request.use((config) => {
   const token = localStorage.getItem('token')
 
   if (token) {
@@ -16,4 +16,4 @@ goScrumApi.interceptors.request.use((config) => {
   return config
 })
 
-export default goScrumApi
+export default tasksApi

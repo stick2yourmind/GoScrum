@@ -1,7 +1,8 @@
 import Login from '../components/Login/Login'
+import Register from '../components/Register/Register'
 
 const AuthScreen = () => {
-  return <Login />
+  return <Register />
 }
 
 export default AuthScreen
