@@ -1,16 +1,42 @@
-import { Field, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
-import { RegisterSchema, registerInit } from '../../utils/schema/register'
-import { getRegisterData } from '../../store/slices/registerData'
+import { RegisterSchema, registerInit } from '../utils/schema/register'
+import { getRegisterData } from '../store/slices/authSlice'
+import authApi from '../api/authApi'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState('')
+  const { registerData } = useSelector((state) => state.auth)
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { registerData } = useSelector((state) => state.registerData)
+
+  const registerUser = async ({ username, password, email, teamID, rol: role, continent, region }) => {
+    try {
+      const resp = await authApi.post('/auth/register', {
+        user: {
+          userName: username,
+          password,
+          email,
+          teamID,
+          role,
+          continent,
+          region
+        }
+      })
+
+      if (resp.status === 201) {
+        navigate('/auth/login', { replace: true })
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   useEffect(() => {
     dispatch(getRegisterData())
@@ -20,22 +46,19 @@ const Register = () => {
   const { Rol, continente, region } = registerData
 
   return (
-    <Flex align="center" bg="white" h="full" justify="center">
-      <Box p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg="gray.100" justify="center" minH="100vh">
+      <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
           validationSchema={RegisterSchema}
           onSubmit={(values) => {
-            console.info(values)
+            registerUser(values)
           }}
         >
-          {({ errors, touched, handleSubmit, setFieldValue, setFieldTouched, values }) => (
-            <form onSubmit={handleSubmit}>
-              <FormLabel mb={0} mt={4}>
-                Nombre de usuario
-              </FormLabel>
-              <Field as={Input} name="username" placeholder="Username" type="text" />
+          {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
+            <Form>
+              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
                 <Box>
                   <Text color="tomato">{errors.username}</Text>
@@ -50,16 +73,13 @@ const Register = () => {
                   <Text color="tomato">{errors.password}</Text>
                 </Box>
               )}
-              <FormLabel mb={0} mt={4}>
-                Email
-              </FormLabel>
-              <Field as={Input} name="email" placeholder="Email" type="text" />
+              <Field as={Input} my={2} name="email" placeholder="Email" type="email" />
               {errors.email && touched.email && (
                 <Box>
                   <Text color="tomato">{errors.email}</Text>
                 </Box>
               )}
-              <Flex mt={4}>
+              <Flex my={2}>
                 <Switch
                   name="hasTeam"
                   pr={2}
@@ -74,10 +94,10 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={Input} mt={4} name="team" placeholder="Ingrese id del equipo" type="text" />
-                  {errors.team && touched.team && (
+                  <Field as={Input} my={2} name="teamID" placeholder="Ingrese id del equipo" type="text" />
+                  {errors.teamID && touched.teamID && (
                     <Box>
-                      <Text color="tomato">{errors.team}</Text>
+                      <Text color="tomato">{errors.teamID}</Text>
                     </Box>
                   )}
                 </>
@@ -124,52 +144,43 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
-              <FormLabel mb={0} mt={4}>
-                Región
-              </FormLabel>
-              <Field
-                as={Select}
-                placeholder="Selecciona una región"
-                value={values.region}
-                onBlur={() => setFieldTouched('region', true)}
-                onChange={(e) => setFieldValue('region', e.target.value)}
-              >
-                {region?.map((region, index) => (
-                  <option key={index} value={region}>
-                    {region}
-                  </option>
-                ))}
-
-                <option value="America">América del norte</option>
-                <option value="America">Brasil</option>
-              </Field>
-              {errors.region && touched.region && (
-                <Box>
-                  <Text color="tomato">{errors.region}</Text>
-                </Box>
+              {values.continent === 'America' && (
+                <>
+                  <Field
+                    as={Select}
+                    my={2}
+                    placeholder="Selecciona Region"
+                    value={values.region}
+                    onBlur={() => setFieldTouched('region', true)}
+                    onChange={(e) => setFieldValue('region', e.target.value)}
+                  >
+                    {region?.map((region, index) => (
+                      <option key={region + index} value={region}>
+                        {region}
+                      </option>
+                    ))}
+                  </Field>
+                  {errors.region && touched.region && (
+                    <Box>
+                      <Text color="tomato">{errors.region}</Text>
+                    </Box>
+                  )}
+                </>
               )}
-              <Flex align="center" justify="center" mb={2} mt={4}>
-                <Button
-                  _hover={{
-                    bg: 'background.300',
-                    color: 'primary.100',
-                    borderColor: 'primary.100',
-                    border: '2px'
-                  }}
-                  bg="primary.100"
-                  border="2px"
-                  borderColor="primary.100"
-                  color="background.300"
-                  size="sm"
-                  type="submit"
-                  width="full"
-                >
+
+              <Flex align="center" justify="center" my={4}>
+                <Button colorScheme="purple" type="submit" variant="outline" width="full">
                   Registrar
                 </Button>
               </Flex>
-            </form>
+            </Form>
           )}
         </Formik>
+        <Link replace={true} to="/auth/">
+          <Text color="#6B46C1" fontWeight="semibold" textAlign="end">
+            Ya tengo una cuenta
+          </Text>
+        </Link>
       </Box>
     </Flex>
   )
