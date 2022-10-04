@@ -1,9 +1,10 @@
-import { Field, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-import { LoginSchema, loginInit } from '../../utils/schema/login'
-import { loginUser } from '../../store/slices/registerData'
+import { LoginSchema, loginInit } from '../utils/schema/login'
+import { loginUser } from '../store/slices/authSlice'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -21,8 +22,8 @@ const Login = () => {
           validationSchema={LoginSchema}
           onSubmit={(values) => onSubmit(values.username, values.password)}
         >
-          {({ errors, touched, handleSubmit }) => (
-            <form onSubmit={handleSubmit}>
+          {({ errors, touched }) => (
+            <Form>
               <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
                 <Box>
@@ -40,9 +41,14 @@ const Login = () => {
                   Ingresar
                 </Button>
               </Flex>
-            </form>
+            </Form>
           )}
         </Formik>
+        <Link replace={true} to="/auth/register">
+          <Text color="#6B46C1" fontWeight="semibold" textAlign="end">
+            Crear una cuenta
+          </Text>
+        </Link>
       </Box>
     </Flex>
   )

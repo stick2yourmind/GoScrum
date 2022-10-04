@@ -2,15 +2,15 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import authApi from '../../../api/authApi'
 
-const registerDataSlice = createSlice({
-  name: 'registerData',
+const authSlice = createSlice({
+  name: 'auth',
   initialState: {
     registerData: {},
     userData: null,
     token: null,
     errorMsg: '',
     loading: false,
-    status: 'checking'
+    status: 'not-authenticated'
   },
   reducers: {
     setRegisterData: (state, action) => {
@@ -20,19 +20,23 @@ const registerDataSlice = createSlice({
       state.userData = action.payload.userData
       state.token = action.payload.token
       state.loading = false
+      state.status = action.payload.status
     },
     startLoading: (state) => {
       state.loading = true
     },
     setError: (state, action) => {
       state.errorMsg = action.payload
+    },
+    setStatus: (state, action) => {
+      state.status = action.payload
     }
   }
 })
 
-export const { setRegisterData, setUserData, startLoading, setError } = registerDataSlice.actions
+export const { setRegisterData, setUserData, startLoading, setError, setStatus } = authSlice.actions
 
-export default registerDataSlice.reducer
+export default authSlice.reducer
 
 export const getRegisterData = () => {
   return async (dispatch) => {
@@ -52,11 +56,25 @@ export const loginUser = (userName, password) => {
       if (resp.status === 200) {
         const { user, token } = resp.data.result
 
-        localStorage.setItem('token', token)
+        window.localStorage.setItem('token', token)
         dispatch(setUserData({ userData: user, token: token }))
       }
     } catch (error) {
       dispatch(setError(error))
     }
+  }
+}
+
+export const logoutUser = () => {
+  return (dispatch) => {
+    dispatch(startLoading)
+    window.localStorage.removeItem('token')
+    dispatch(
+      setUserData({
+        userData: null,
+        token: null,
+        status: 'not-authenticated'
+      })
+    )
   }
 }

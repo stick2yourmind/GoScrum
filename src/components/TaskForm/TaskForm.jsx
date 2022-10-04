@@ -3,7 +3,7 @@ import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Textarea, S
 import { useDispatch } from 'react-redux'
 
 import { TaskSchema, loginInit } from '../../utils/schema/taskForm'
-import { setTasks } from '../../store/slices/tasks'
+import { setTasks } from '../../store/slices/tasksSlice'
 
 const TaskForm = () => {
   const dispatch = useDispatch()

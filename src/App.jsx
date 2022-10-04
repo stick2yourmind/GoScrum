@@ -1,10 +1,9 @@
-import AuthScreen from './screens/AuthScreen'
-import HomeScreen from './screens/HomeScreen'
+import { AppRouter } from './router/AppRouter'
 
 function App() {
   return (
     <div>
-      <AuthScreen />
+      <AppRouter />
     </div>
   )
 }
