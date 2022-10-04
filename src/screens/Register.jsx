@@ -46,8 +46,8 @@ const Register = () => {
   const { Rol, continente, region } = registerData
 
   return (
-    <Flex align="center" bg="gray.100" justify="center" minH="100vh">
-      <Box bg="white" p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg="white" justify="center" minH="100vh">
+      <Box p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
@@ -58,7 +58,10 @@ const Register = () => {
         >
           {({ errors, touched, setFieldValue, setFieldTouched, values }) => (
             <Form>
-              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
+              <FormLabel mb={0} mt={4}>
+                Nombre de usuario
+              </FormLabel>
+              <Field as={Input} name="username" placeholder="Username" type="text" />
               {errors.username && touched.username && (
                 <Box>
                   <Text color="tomato">{errors.username}</Text>
@@ -73,13 +76,16 @@ const Register = () => {
                   <Text color="tomato">{errors.password}</Text>
                 </Box>
               )}
-              <Field as={Input} my={2} name="email" placeholder="Email" type="email" />
+              <FormLabel mb={0} mt={4}>
+                Email
+              </FormLabel>
+              <Field as={Input} name="email" placeholder="Email" type="email" />
               {errors.email && touched.email && (
                 <Box>
                   <Text color="tomato">{errors.email}</Text>
                 </Box>
               )}
-              <Flex my={2}>
+              <Flex mt={4}>
                 <Switch
                   name="hasTeam"
                   pr={2}
@@ -94,7 +100,7 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={Input} my={2} name="teamID" placeholder="Ingrese id del equipo" type="text" />
+                  <Field as={Input} mt={4} name="teamID" placeholder="Ingrese id del equipo" type="text" />
                   {errors.teamID && touched.teamID && (
                     <Box>
                       <Text color="tomato">{errors.teamID}</Text>
@@ -148,7 +154,7 @@ const Register = () => {
                 <>
                   <Field
                     as={Select}
-                    my={2}
+                    mt={4}
                     placeholder="Selecciona Region"
                     value={values.region}
                     onBlur={() => setFieldTouched('region', true)}
@@ -169,7 +175,21 @@ const Register = () => {
               )}
 
               <Flex align="center" justify="center" my={4}>
-                <Button colorScheme="purple" type="submit" variant="outline" width="full">
+                <Button
+                  _hover={{
+                    bg: 'white',
+                    color: 'primary.100',
+                    border: '2px',
+                    borderColor: 'primary.100'
+                  }}
+                  bg="primary.100"
+                  border="2px"
+                  borderColor="primary.100"
+                  color="white"
+                  type="submit"
+                  variant="outline"
+                  width="full"
+                >
                   Registrar
                 </Button>
               </Flex>
@@ -177,7 +197,7 @@ const Register = () => {
           )}
         </Formik>
         <Link replace={true} to="/auth/">
-          <Text color="#6B46C1" fontWeight="semibold" textAlign="end">
+          <Text color="primary.100" fontWeight="semibold" textAlign="end">
             Ya tengo una cuenta
           </Text>
         </Link>
