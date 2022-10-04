@@ -26,8 +26,10 @@ export const RegisterSchema = Yup.object().shape({
 export const registerInit = {
   username: '',
   password: '',
+  email: '',
   rol: '',
   continent: '',
+  region: '',
   hasTeam: false,
   teamID: '',
   region: '',

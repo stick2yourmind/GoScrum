@@ -43,8 +43,8 @@ const Register = () => {
   const { Rol, continente, region } = registerData
 
   return (
-    <Flex align="center" bg="gray.100" h="100vh" justify="center">
-      <Box bg="white" p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg="white" h="full" justify="center">
+      <Box p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
@@ -61,7 +61,10 @@ const Register = () => {
                   <Text color="tomato">{errors.username}</Text>
                 </Box>
               )}
-              <Field as={Input} my={2} name="password" placeholder="Password" type="password" />
+              <FormLabel mb={0} mt={4}>
+                Contraseña
+              </FormLabel>
+              <Field as={Input} name="password" placeholder="Password" type="password" />
               {errors.password && touched.password && (
                 <Box>
                   <Text color="tomato">{errors.password}</Text>
@@ -75,9 +78,8 @@ const Register = () => {
               )}
               <Flex my={2}>
                 <Switch
-                  my={2}
                   name="hasTeam"
-                  px={2}
+                  pr={2}
                   onChange={(e) => {
                     setHasTeam(e.target.checked)
                     setFieldValue('hasTeam', e.target.checked)
@@ -97,10 +99,12 @@ const Register = () => {
                   )}
                 </>
               )}
+              <FormLabel mb={0} mt={4}>
+                Rol
+              </FormLabel>
               <Field
                 as={Select}
-                my={2}
-                placeholder="Selecciona rol"
+                placeholder="Selecciona un rol"
                 value={values.rol}
                 onBlur={() => setFieldTouched('rol', true)}
                 onChange={(e) => setFieldValue('rol', e.target.value)}
@@ -116,10 +120,12 @@ const Register = () => {
                   <Text color="tomato">{errors.rol}</Text>
                 </Box>
               )}
+              <FormLabel mb={0} mt={4}>
+                Continente
+              </FormLabel>
               <Field
                 as={Select}
-                my={2}
-                placeholder="Selecciona continente"
+                placeholder="Selecciona un continente"
                 value={values.continent}
                 onBlur={() => setFieldTouched('continent', true)}
                 onChange={(e) => setFieldValue('continent', e.target.value)}
