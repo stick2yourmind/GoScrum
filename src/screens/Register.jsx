@@ -2,16 +2,18 @@ import { Field, Form, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-import { RegisterSchema, registerInit } from '../../utils/schema/register'
-import { getRegisterData } from '../../store/slices/registerData'
-import authApi from '../../api/authApi'
+import { RegisterSchema, registerInit } from '../utils/schema/register'
+import { getRegisterData } from '../store/slices/authSlice'
+import authApi from '../api/authApi'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState('')
+  const { registerData } = useSelector((state) => state.auth)
 
+  const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { registerData } = useSelector((state) => state.registerData)
 
   const registerUser = async ({ username, password, email, teamID, rol: role, continent, region }) => {
     try {
@@ -28,7 +30,7 @@ const Register = () => {
       })
 
       if (resp.status === 201) {
-        console.log(resp)
+        navigate('/auth/login', { replace: true })
       }
     } catch (error) {
       console.log(error)
@@ -43,8 +45,8 @@ const Register = () => {
   const { Rol, continente, region } = registerData
 
   return (
-    <Flex align="center" bg="white" h="full" justify="center">
-      <Box p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg="gray.100" justify="center" minH="100vh">
+      <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
