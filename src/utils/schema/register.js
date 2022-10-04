@@ -10,6 +10,7 @@ export const RegisterSchema = Yup.object().shape({
     .required('Contraseña requerida')
     .min(8, 'La contraseña debe tener 8 caracteres como mínimo')
     .max(16, 'La contraseña debe tener 16 caracteres como máximo'),
+  email: Yup.string().email('El email debe tener un formato válido').required('Email requerido'),
   rol: Yup.string().required('El rol es requerido'),
   continent: Yup.string().required('El continente es requerido'),
   region: Yup.string().required('La región es requerida'),
@@ -22,6 +23,7 @@ export const RegisterSchema = Yup.object().shape({
 export const registerInit = {
   username: '',
   password: '',
+  email: '',
   rol: '',
   continent: '',
   region: '',
