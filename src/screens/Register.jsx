@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
+import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch, useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -16,6 +16,7 @@ const Register = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const toast = useToast()
 
   const registerUser = async ({ userName, password, email, teamID, role, continent, region }) => {
     try {
@@ -32,10 +33,30 @@ const Register = () => {
       })
 
       if (resp.status === 201) {
+        toast({
+          title: 'Operación exitosa!',
+          description: 'Usuario registrado correctamente',
+          status: 'success',
+          duration: 2000,
+          position: 'top-right',
+          isClosable: true
+        })
+
         navigate('/auth/login', { replace: true })
       }
     } catch (error) {
       console.log(error)
+
+      if (error.response.status === 409) {
+        toast({
+          title: 'Email error',
+          description: 'El email ya fue registrado por otro usuario.',
+          status: 'error',
+          duration: 5000,
+          position: 'top-right',
+          isClosable: true
+        })
+      }
     }
   }
 
@@ -45,6 +66,11 @@ const Register = () => {
   }, [])
 
   const { Rol, continente, region } = registerData
+
+  // The user region must be one of this [Latam, Brazil, Otro]
+  const newRegions = region
+    ?.filter((region) => region !== 'America del Norte')
+    .map((e) => (e === 'Brasil' ? 'Brazil' : e))
 
   return (
     <Flex align="center" bg="white" justify="center" minH="100vh">
@@ -151,30 +177,27 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
-              {values.continent === 'America' && (
-                <>
-                  <FormLabel mb={0} mt={4}>
-                    Región
-                  </FormLabel>
-                  <Field
-                    as={Select}
-                    placeholder="Selecciona Region"
-                    value={values.region}
-                    onBlur={() => setFieldTouched('region', true)}
-                    onChange={(e) => setFieldValue('region', e.target.value)}
-                  >
-                    {region?.map((region, index) => (
-                      <option key={region + index} value={region}>
-                        {region}
-                      </option>
-                    ))}
-                  </Field>
-                  {errors.region && touched.region && (
-                    <Box>
-                      <Text color="tomato">{errors.region}</Text>
-                    </Box>
-                  )}
-                </>
+
+              <FormLabel mb={0} mt={4}>
+                Región
+              </FormLabel>
+              <Field
+                as={Select}
+                placeholder="Selecciona una región"
+                value={values.region}
+                onBlur={() => setFieldTouched('region', true)}
+                onChange={(e) => setFieldValue('region', e.target.value)}
+              >
+                {newRegions?.map((region, index) => (
+                  <option key={region + index} value={region}>
+                    {region}
+                  </option>
+                ))}
+              </Field>
+              {errors.region && touched.region && (
+                <Box>
+                  <Text color="tomato">{errors.region}</Text>
+                </Box>
               )}
 
               <Flex align="center" justify="center" my={4}>
