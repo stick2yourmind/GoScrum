@@ -45,6 +45,7 @@ const Register = () => {
         navigate('/auth/login', { replace: true })
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error)
 
       if (error.response.status === 409) {

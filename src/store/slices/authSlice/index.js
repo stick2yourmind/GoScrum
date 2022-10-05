@@ -22,8 +22,8 @@ const authSlice = createSlice({
       state.loading = false
       state.status = action.payload.status
     },
-    startLoading: (state) => {
-      state.loading = true
+    setLoading: (state, action) => {
+      state.loading = action.payload
     },
     setError: (state, action) => {
       state.errorMsg = action.payload
@@ -34,7 +34,7 @@ const authSlice = createSlice({
   }
 })
 
-export const { setRegisterData, setUserData, startLoading, setError, setStatus } = authSlice.actions
+export const { setRegisterData, setUserData, setLoading, setError, setStatus } = authSlice.actions
 
 export default authSlice.reducer
 
@@ -50,24 +50,32 @@ export const getRegisterData = () => {
 export const loginUser = (userName, password) => {
   return async (dispatch) => {
     try {
-      dispatch(startLoading())
+      dispatch(setLoading(true))
       const resp = await authApi.post('/auth/login', { userName, password })
 
       if (resp.status === 200) {
         const { user, token } = resp.data.result
 
         window.localStorage.setItem('token', token)
-        dispatch(setUserData({ userData: user, token: token }))
+        dispatch(setUserData({ userData: user, token: token, status: 'authenticated' }))
       }
     } catch (error) {
-      dispatch(setError(error))
+      // eslint-disable-next-line no-console
+      console.log(error)
+      dispatch(setError(error.message))
+
+      dispatch(setLoading(false))
+
+      setTimeout(() => {
+        dispatch(setError(''))
+      }, 2000)
     }
   }
 }
 
 export const logoutUser = () => {
   return (dispatch) => {
-    dispatch(startLoading)
+    dispatch(setLoading(true))
     window.localStorage.removeItem('token')
     dispatch(
       setUserData({
@@ -76,5 +84,6 @@ export const logoutUser = () => {
         status: 'not-authenticated'
       })
     )
+    dispatch(setLoading(false))
   }
 }
