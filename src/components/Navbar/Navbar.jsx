@@ -1,11 +1,12 @@
 import { Spacer, Image, Stack, Button, Text } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Logo from '../../assets/GoScrum.png'
 import { logoutUser } from '../../store/slices/authSlice'
 
 const Navbar = () => {
   const dispatch = useDispatch()
+  const { userName } = useSelector((state) => state.auth.userData)
 
   const onLogout = () => {
     dispatch(logoutUser())
@@ -44,7 +45,7 @@ const Navbar = () => {
         Donar
       </Button>
       <Text>Tareas Creadas: 3</Text>
-      <Text>User</Text>
+      <Text>{userName}</Text>
       <Button
         _hover={{
           bg: 'white',
