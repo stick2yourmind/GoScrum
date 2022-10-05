@@ -8,9 +8,10 @@ import { Link } from 'react-router-dom'
 import { RegisterSchema, registerInit } from '../utils/schema/register'
 import { getRegisterData } from '../store/slices/authSlice'
 import authApi from '../api/authApi'
+import generateRandomID from '../utils/functions/generateId'
 
 const Register = () => {
-  const [hasTeam, setHasTeam] = useState('')
+  const [hasTeam, setHasTeam] = useState(false)
   const { registerData } = useSelector((state) => state.auth)
 
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ const Register = () => {
           userName,
           password,
           email,
-          teamID,
+          teamID: hasTeam && teamID ? teamID : generateRandomID(),
           role,
           continent,
           region
