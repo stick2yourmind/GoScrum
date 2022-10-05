@@ -13,13 +13,10 @@ export const RegisterSchema = Yup.object().shape({
   email: Yup.string().email('Email invalido').required('El email es requerido'),
   role: Yup.string().required('El rol es requerido'),
   continent: Yup.string().required('El continente es requerido'),
-  region: Yup.string().when('continent', {
-    is: 'America',
-    then: Yup.string().required('La region es requerida')
-  }),
+  region: Yup.string().required('La región es requerida'),
   teamID: Yup.string().when('hasTeam', {
     is: true,
-    then: Yup.string().required('Team id no valido')
+    then: Yup.string().required('Team id no válido')
   })
 })
 
