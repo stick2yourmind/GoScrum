@@ -5,11 +5,11 @@ const baseURL = 'https://goscrum-api.alkemy.org'
 const tasksApi = axios.create({ baseURL })
 
 tasksApi.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token')
+  const token = window.localStorage.getItem('token')
 
   if (token) {
     config.headers = {
-      Authorization: `Bearer ${token || ''}`
+      Authorization: `Bearer ${token}`
     }
   }
 
