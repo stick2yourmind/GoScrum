@@ -1,10 +1,19 @@
 import { Stack } from '@chakra-ui/react'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import Navbar from '../components/Navbar/Navbar'
 import TaskSection from '../components/TaskSection/TaskSection'
 import TaskForm from '../components/TaskForm/TaskForm'
+import { startGetUserTasks } from '../store/slices/tasksSlice'
 
 const HomeScreen = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(startGetUserTasks())
+  }, [])
+
   return (
     <>
       <Navbar />
