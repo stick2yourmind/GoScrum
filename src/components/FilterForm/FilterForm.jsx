@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 
 import useDebouncer from '../../hooks/useDebouncer'
 
-const FilterForm = ({ setFilter, filter, onApplyFilters }) => {
+const FilterForm = ({ setFilter, filter }) => {
   const [title, setTitle] = useState('')
   const debouncedTitleFilter = useDebouncer(title, 500)
 
@@ -48,25 +48,6 @@ const FilterForm = ({ setFilter, filter, onApplyFilters }) => {
         <option value="MEDIUM">Media</option>
         <option value="LOW">Baja</option>
       </Select>
-      <Button
-        _hover={{
-          bg: 'white',
-          color: 'primary.100',
-          border: '2px',
-          borderColor: 'primary.100'
-        }}
-        bg="primary.100"
-        border="2px"
-        borderColor="primary.100"
-        boxShadow="dark-lg"
-        color="white"
-        fontSize={{ base: '12px', sm: '15px' }}
-        size="md"
-        width={{ base: '100%', sm: '150px' }}
-        onClick={onApplyFilters}
-      >
-        Aplicar
-      </Button>
     </Stack>
   )
 }

@@ -34,10 +34,6 @@ const TaskSection = () => {
     setTasksToShow(tasks)
   }
 
-  const onApplyFilters = () => {
-    filterTasks()
-  }
-
   useEffect(() => {
     filterTasks()
   }, [allTasks])
@@ -51,7 +47,7 @@ const TaskSection = () => {
       <Text fontSize="18px" fontWeight="semibold">
         Mis tareas
       </Text>
-      <FilterForm filter={filter} setFilter={setFilter} onApplyFilters={onApplyFilters} />
+      <FilterForm filter={filter} setFilter={setFilter} />
 
       <Stack direction={{ base: 'column', md: 'row' }} height="100%">
         <Box bg="white" boxShadow="xl" flex={1} minH="100%" paddingX={2} paddingY={4} rounded="xl">
