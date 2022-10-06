@@ -56,7 +56,12 @@ export const loginUser = (userName, password) => {
       if (resp.status === 200) {
         const { user, token } = resp.data.result
 
-        window.localStorage.setItem('token', token)
+        const dataForLocalStorage = {
+          user,
+          token
+        }
+
+        window.localStorage.setItem('user', JSON.stringify(dataForLocalStorage))
         dispatch(setUserData({ userData: user, token: token, status: 'authenticated' }))
       }
     } catch (error) {
@@ -78,7 +83,7 @@ export const loginUser = (userName, password) => {
 export const logoutUser = () => {
   return (dispatch) => {
     dispatch(startLoading())
-    window.localStorage.removeItem('token')
+    window.localStorage.removeItem('user')
     dispatch(
       setUserData({
         userData: null,
