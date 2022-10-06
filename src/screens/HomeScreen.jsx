@@ -19,7 +19,9 @@ const HomeScreen = () => {
       <Navbar />
       <Stack direction={{ base: 'column', xl: 'row' }} height="calc(100vh - 90px)" marginY="20px" paddingX={1}>
         <TaskForm />
-        <TaskSection />
+        <Stack m={4} p="14px">
+          <TaskSection />
+        </Stack>
       </Stack>
     </>
   )
