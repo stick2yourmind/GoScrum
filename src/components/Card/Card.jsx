@@ -1,4 +1,4 @@
-import { Stack, Text, Button, Box, Heading } from '@chakra-ui/react'
+import { Stack, Text, Button, Heading, Container } from '@chakra-ui/react'
 import * as dayjs from 'dayjs'
 import timeZonePlugin from 'dayjs-ext/plugin/timeZone'
 
@@ -13,7 +13,16 @@ const Card = ({ task }) => {
   dayjs.extend(timeZonePlugin)
 
   return (
-    <Box borderColor="gray.300" borderWidth="1px" mt={2} p={5} rounded="xl" shadow="md" w="100%">
+    <Container
+      bgColor="#FAFAFA"
+      borderColor="gray.300"
+      borderWidth="1px"
+      flex={1}
+      mt={2}
+      paddingY={2}
+      rounded="xl"
+      shadow="md"
+    >
       <Stack align="center" direction="row" justify="space-between">
         <Heading fontSize="15px">{task.title}</Heading>
         <Button size="xs">X</Button>
@@ -32,7 +41,7 @@ const Card = ({ task }) => {
         {task.importance === 'MEDIUM' && <Medium />}
         {task.importance === 'LOW' && <Low />}
       </Stack>
-      <Text mt={4}>{task.description}</Text>
+      <Text mt={3}>{task.description}</Text>
       <Button
         _hover={{ color: 'primary.100', borderColor: 'primary.100', bg: 'white' }}
         bg="primary.100"
@@ -45,7 +54,7 @@ const Card = ({ task }) => {
       >
         Ver mas
       </Button>
-    </Box>
+    </Container>
   )
 }
 

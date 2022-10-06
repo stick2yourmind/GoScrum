@@ -1,20 +1,48 @@
 import { Field, Formik } from 'formik'
 import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Textarea, Stack } from '@chakra-ui/react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
 import { TaskSchema, loginInit } from '../../utils/schema/taskForm'
-import { setTasks } from '../../store/slices/tasksSlice'
+import { startGettingInputData, startGetUserTasks } from '../../store/slices/tasksSlice'
+import tasksApi from '../../api/tasksApi'
+
+const CustomInputComponent = (props) => (
+  <Input borderRadius="8px" className="form__input" type={props.type && 'text'} {...props} />
+)
 
 const TaskForm = () => {
+  const { inputData } = useSelector((state) => state.tasks)
   const dispatch = useDispatch()
 
-  const CustomInputComponent = (props) => (
-    <Input borderRadius="8px" className="form__input" type={props.type && 'text'} {...props} />
-  )
+  const postTask = async (values) => {
+    const newTask = {
+      title: values.title,
+      importance: values.priority,
+      status: values.status,
+      description: values.description
+    }
+
+    try {
+      const resp = await tasksApi.post('/task', {
+        task: newTask
+      })
+
+      if (resp.status === 201) {
+        dispatch(startGetUserTasks())
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleSubmit = (values) => {
-    dispatch(setTasks(values))
+    postTask(values)
   }
+
+  useEffect(() => {
+    dispatch(startGettingInputData())
+  }, [])
 
   return (
     <Flex width="100%">
@@ -36,23 +64,31 @@ const TaskForm = () => {
                   )}
                 </Stack>
                 <Stack width="100%">
-                  <Field as={Select} borderRadius="8px" name="state" placeholder="Selecciona un estado">
-                    <option value="nueva">Nueva</option>
-                    <option value="desarrollando">En desarrollo</option>
-                    <option value="finalizada">Finalizado</option>
+                  <Field as={Select} borderRadius="8px" name="status" placeholder="Selecciona un estado">
+                    {!!inputData
+                      ? inputData.status.map((status) => (
+                          <option key={status} value={status}>
+                            {status}
+                          </option>
+                        ))
+                      : null}
                   </Field>
 
-                  {errors.state && touched.state && (
+                  {errors.status && touched.status && (
                     <Box className="error">
-                      <Text color="tomato">{errors.state}</Text>
+                      <Text color="tomato">{errors.status}</Text>
                     </Box>
                   )}
                 </Stack>
                 <Stack width="100%">
                   <Field as={Select} borderRadius="8px" name="priority" placeholder="Selecciona una prioridad">
-                    <option value="alta">Alta</option>
-                    <option value="media">Media</option>
-                    <option value="baja">Baja</option>
+                    {!!inputData
+                      ? inputData.importance.map((imp) => (
+                          <option key={imp} value={imp}>
+                            {imp}
+                          </option>
+                        ))
+                      : null}
                   </Field>
                   {errors.priority && touched.priority && (
                     <Box className="error">
