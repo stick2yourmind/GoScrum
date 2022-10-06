@@ -7,7 +7,7 @@ import * as Yup from 'yup'
 export const TaskSchema = Yup.object().shape({
   title: Yup.string().required('Título de tarea requerido').min(3, 'El título debe tener 3 caracteres como mínimo'),
   priority: Yup.string().required('Prioridad requerido'),
-  state: Yup.string().required('Estado requerido'),
+  status: Yup.string().required('Estado requerido'),
   description: Yup.string()
     .required('Descripción de la tarea requerida')
     .min(5, 'La descripción debe tener 5 caracteres como mínimo')
@@ -16,6 +16,6 @@ export const TaskSchema = Yup.object().shape({
 export const loginInit = {
   title: '',
   priority: '',
-  state: '',
+  status: '',
   description: ''
 }

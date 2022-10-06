@@ -43,17 +43,24 @@ const TaskSection = () => {
   }, [filter])
 
   return (
-    <Stack bg="white" boxShadow={{ sm: 'xl' }} height="100%" m={4} p="20px" rounded="2xl" width="100%">
+    <Stack
+      bg="white"
+      boxShadow={{ sm: 'xl' }}
+      height="100%"
+      m={4}
+      overflowY={{ base: 'visible', md: 'scroll' }}
+      p="20px"
+      rounded="2xl"
+      width="100%"
+    >
       <Text fontSize="18px" fontWeight="semibold">
         Mis tareas
       </Text>
       <FilterForm filter={filter} setFilter={setFilter} />
 
       <Stack direction={{ base: 'column', md: 'row' }} height="100%">
-        <Box bg="white" boxShadow="xl" flex={1} minH="100%" paddingX={2} paddingY={4} rounded="xl">
-          <Heading fontSize="2xl" marginBottom={3}>
-            Nuevas
-          </Heading>
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" marginY={1} paddingX={2} paddingY={4} rounded="xl">
+          <Heading fontSize="2xl">Nuevas</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
                 if (task.status === 'NEW') {
@@ -64,10 +71,8 @@ const TaskSection = () => {
               })
             : null}
         </Box>
-        <Box bg="white" boxShadow="xl" flex={1} paddingX={2} paddingY={4} rounded="xl">
-          <Heading fontSize="2xl" marginBottom={3}>
-            En proceso
-          </Heading>
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" marginY={1} paddingX={2} paddingY={4} rounded="xl">
+          <Heading fontSize="2xl">En Proceso</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
                 if (task.status === 'IN PROGRESS') {
@@ -78,10 +83,8 @@ const TaskSection = () => {
               })
             : null}
         </Box>
-        <Box bg="white" boxShadow="xl" flex={1} paddingX={2} paddingY={4} rounded="xl">
-          <Heading fontSize="2xl" marginBottom={3}>
-            Finalizadas
-          </Heading>
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" marginY={1} paddingX={2} paddingY={4} rounded="xl">
+          <Heading fontSize="2xl">Finalizadas</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
                 if (task.status === 'FINISHED') {
