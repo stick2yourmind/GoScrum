@@ -1,4 +1,4 @@
-import { Stack } from '@chakra-ui/react'
+import { Stack, Grid, GridItem } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -17,12 +17,21 @@ const HomeScreen = () => {
   return (
     <>
       <Navbar />
-      <Stack direction={{ base: 'column', xl: 'row' }} height="calc(100vh - 90px)" marginY="20px" paddingX={1}>
-        <TaskForm />
-        <Stack m={4} p="14px">
+      <Grid
+        alignItems={{ base: 'center', xl: 'baseline' }}
+        height="calc(100vh - 90px)"
+        marginY="20px"
+        paddingX={1}
+        templateColumns={{ base: '1fr', xl: 'repeat(2, 1fr)' }}
+      >
+        <Stack height="50%">
+          <TaskForm />
+        </Stack>
+
+        <Stack height="50%" m={4} p="14px">
           <TaskSection />
         </Stack>
-      </Stack>
+      </Grid>
     </>
   )
 }
