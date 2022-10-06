@@ -1,5 +1,5 @@
 import { Field, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Textarea, Stack } from '@chakra-ui/react'
+import { Box, Input, Text, Heading, Button, Select, FormLabel, Textarea, Stack } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
@@ -42,6 +42,7 @@ const TaskForm = () => {
 
   useEffect(() => {
     dispatch(startGettingInputData())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

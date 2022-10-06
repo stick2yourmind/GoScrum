@@ -1,4 +1,4 @@
-import { Stack, Grid, GridItem } from '@chakra-ui/react'
+import { Stack, Grid } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -12,6 +12,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     dispatch(startGetUserTasks())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

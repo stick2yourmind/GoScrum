@@ -36,10 +36,12 @@ const TaskSection = () => {
 
   useEffect(() => {
     filterTasks()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTasks])
 
   useEffect(() => {
     filterTasks()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
 
   return (
