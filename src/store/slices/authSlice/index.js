@@ -56,19 +56,34 @@ export const loginUser = (userName, password) => {
       if (resp.status === 200) {
         const { user, token } = resp.data.result
 
-        window.localStorage.setItem('token', token)
-        dispatch(setUserData({ userData: user, token: token }))
+        const dataForLocalStorage = {
+          user,
+          token
+        }
+
+        window.localStorage.setItem('user', JSON.stringify(dataForLocalStorage))
+        dispatch(setUserData({ userData: user, token: token, status: 'authenticated' }))
       }
     } catch (error) {
-      dispatch(setError(error))
+      // eslint-disable-next-line no-console
+      console.log(error)
+
+      // The initial values ​​are kept but the loading is changed to false
+      dispatch(setUserData({ userData: null, token: null, status: 'not-authenticated' }))
+
+      dispatch(setError(error.message))
+
+      setTimeout(() => {
+        dispatch(setError(''))
+      }, 2000)
     }
   }
 }
 
 export const logoutUser = () => {
   return (dispatch) => {
-    dispatch(startLoading)
-    window.localStorage.removeItem('token')
+    dispatch(startLoading())
+    window.localStorage.removeItem('user')
     dispatch(
       setUserData({
         userData: null,

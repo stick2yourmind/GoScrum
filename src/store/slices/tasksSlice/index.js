@@ -30,7 +30,6 @@ export default taskSlice.reducer
 
 export const startGetUserTasks = () => {
   return async (dispatch) => {
-    console.log('hola')
     try {
       dispatch(startLoading())
       const resp = await tasksApi.get('/task')

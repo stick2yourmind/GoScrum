@@ -32,7 +32,7 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
   const dispatch = useDispatch()
   const initialRef = useRef(null)
 
-  const onSubmit = async (values) => {
+  const onSubmitTask = async (values) => {
     try {
       const resp = await tasksApi.patch(`/task/${task._id}`, {
         task: {
@@ -43,9 +43,11 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
         }
       })
 
+      console.log(resp)
+
       if (resp.status === 200) {
-        console.log('Modificado')
         dispatch(startGetUserTasks())
+        onClose()
       }
     } catch (error) {
       console.log(error)
@@ -64,15 +66,17 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
             description: task.description
           }}
           validationSchema={TaskSchema}
-          onSubmit={(values) => onSubmit(values)}
+          onSubmit={(values) => {
+            onSubmitTask(values)
+          }}
         >
           {({ errors, touched }) => (
             <ModalContent>
               <ModalHeader>Editar Tarea</ModalHeader>
               <ModalCloseButton />
-              <ModalBody pb={6}>
-                <Box fontSize={16} p={1} rounded="md" width="100%">
-                  <Form>
+              <Form>
+                <ModalBody pb={6}>
+                  <Box fontSize={16} p={1} rounded="md" width="100%">
                     <FormControl>
                       <Flex direction="column" gap={4}>
                         <Field as={CustomInputComponent} name="title" placeholder="Título" type="text" />
@@ -118,45 +122,45 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                         )}
                       </Flex>
                     </FormControl>
-                  </Form>
-                </Box>
-              </ModalBody>
+                  </Box>
+                </ModalBody>
 
-              <ModalFooter gap={4} justifyContent="end">
-                <Button
-                  _hover={{
-                    bg: 'background.300',
-                    color: 'primary.100',
-                    borderColor: 'primary.100',
-                    border: '2px'
-                  }}
-                  bg="primary.100"
-                  border="2px"
-                  borderColor="primary.100"
-                  color="background.300"
-                  size="sm"
-                  type="submit"
-                >
-                  Guardar
-                </Button>
-                <Button
-                  _hover={{
-                    bg: 'background.300',
-                    color: 'error.100',
-                    borderColor: 'error.100',
-                    border: '2px'
-                  }}
-                  bg="error.100"
-                  border="2px"
-                  borderColor="primary.100"
-                  color="background.300"
-                  size="sm"
-                  type="submit"
-                  onClick={onClose}
-                >
-                  Cancelar
-                </Button>
-              </ModalFooter>
+                <ModalFooter gap={4} justifyContent="end">
+                  <Button
+                    _hover={{
+                      bg: 'background.300',
+                      color: 'primary.100',
+                      borderColor: 'primary.100',
+                      border: '2px'
+                    }}
+                    bg="primary.100"
+                    border="2px"
+                    borderColor="primary.100"
+                    color="background.300"
+                    size="sm"
+                    type="submit"
+                  >
+                    Guardar
+                  </Button>
+                  <Button
+                    _hover={{
+                      bg: 'background.300',
+                      color: 'error.100',
+                      borderColor: 'error.100',
+                      border: '2px'
+                    }}
+                    bg="error.100"
+                    border="2px"
+                    borderColor="primary.100"
+                    color="background.300"
+                    size="sm"
+                    type="submit"
+                    onClick={onClose}
+                  >
+                    Cancelar
+                  </Button>
+                </ModalFooter>
+              </Form>
             </ModalContent>
           )}
         </Formik>
