@@ -22,8 +22,8 @@ const authSlice = createSlice({
       state.loading = false
       state.status = action.payload.status
     },
-    setLoading: (state, action) => {
-      state.loading = action.payload
+    startLoading: (state) => {
+      state.loading = true
     },
     setError: (state, action) => {
       state.errorMsg = action.payload
@@ -34,7 +34,7 @@ const authSlice = createSlice({
   }
 })
 
-export const { setRegisterData, setUserData, setLoading, setError, setStatus } = authSlice.actions
+export const { setRegisterData, setUserData, startLoading, setError, setStatus } = authSlice.actions
 
 export default authSlice.reducer
 
@@ -50,7 +50,7 @@ export const getRegisterData = () => {
 export const loginUser = (userName, password) => {
   return async (dispatch) => {
     try {
-      dispatch(setLoading(true))
+      dispatch(startLoading())
       const resp = await authApi.post('/auth/login', { userName, password })
 
       if (resp.status === 200) {
@@ -62,9 +62,11 @@ export const loginUser = (userName, password) => {
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error)
-      dispatch(setError(error.message))
 
-      dispatch(setLoading(false))
+      // The initial values ​​are kept but the loading is changed to false
+      dispatch(setUserData({ userData: null, token: null, status: 'not-authenticated' }))
+
+      dispatch(setError(error.message))
 
       setTimeout(() => {
         dispatch(setError(''))
@@ -75,7 +77,7 @@ export const loginUser = (userName, password) => {
 
 export const logoutUser = () => {
   return (dispatch) => {
-    dispatch(setLoading(true))
+    dispatch(startLoading())
     window.localStorage.removeItem('token')
     dispatch(
       setUserData({
@@ -84,6 +86,5 @@ export const logoutUser = () => {
         status: 'not-authenticated'
       })
     )
-    dispatch(setLoading(false))
   }
 }
