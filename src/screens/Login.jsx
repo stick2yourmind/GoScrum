@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 
 import { LoginSchema, loginInit } from '../utils/schema/login'
 import { loginUser } from '../store/slices/authSlice'
+import Spinner from '../components/Spinner/Spinner'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -30,7 +31,9 @@ const Login = () => {
     dispatch(loginUser(user, password))
   }
 
-  return (
+  return loading ? (
+    <Spinner />
+  ) : (
     <Flex align="center" bg="gray.100" h="100vh" justify="center">
       <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Iniciar sesión</Heading>
