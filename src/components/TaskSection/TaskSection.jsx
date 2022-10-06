@@ -36,20 +36,20 @@ const TaskSection = () => {
 
   useEffect(() => {
     filterTasks()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allTasks])
 
   useEffect(() => {
     filterTasks()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter])
 
   return (
     <Stack
-      bg="white"
+      bg="background.200"
       boxShadow={{ sm: 'xl' }}
-      height="100%"
-      m={4}
-      overflowY={{ base: 'visible', md: 'scroll' }}
-      p="20px"
+      overflowY={{ xl: 'scroll' }}
+      p="12px"
       rounded="2xl"
       width="100%"
     >
@@ -59,7 +59,7 @@ const TaskSection = () => {
       <FilterForm filter={filter} setFilter={setFilter} />
 
       <Stack direction={{ base: 'column', md: 'row' }} height="100%">
-        <Box bg="white" boxShadow="xl" flex={1} height="max-content" marginY={1} paddingX={2} paddingY={4} rounded="xl">
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingX={2} paddingY={4} rounded="xl">
           <Heading fontSize="2xl">Nuevas</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
@@ -83,7 +83,7 @@ const TaskSection = () => {
               })
             : null}
         </Box>
-        <Box bg="white" boxShadow="xl" flex={1} height="max-content" marginY={1} paddingX={2} paddingY={4} rounded="xl">
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingX={2} paddingY={4} rounded="xl">
           <Heading fontSize="2xl">Finalizadas</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
