@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch } from '@chakra-ui/react'
+import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch, useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -8,33 +8,56 @@ import { Link } from 'react-router-dom'
 import { RegisterSchema, registerInit } from '../utils/schema/register'
 import { getRegisterData } from '../store/slices/authSlice'
 import authApi from '../api/authApi'
+import generateRandomID from '../utils/functions/generateId'
 
 const Register = () => {
-  const [hasTeam, setHasTeam] = useState('')
+  const [hasTeam, setHasTeam] = useState(false)
   const { registerData } = useSelector((state) => state.auth)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const toast = useToast()
 
-  const registerUser = async ({ username, password, email, teamID, rol: role, continent, region }) => {
+  const registerUser = async ({ userName, password, email, teamID, role, continent, region }) => {
     try {
       const resp = await authApi.post('/auth/register', {
         user: {
-          userName: username,
+          userName,
           password,
           email,
-          teamID,
+          teamID: hasTeam && teamID ? teamID : generateRandomID(),
           role,
           continent,
-          region
+          region: region ? region : 'Otro'
         }
       })
 
       if (resp.status === 201) {
+        toast({
+          title: 'Operación exitosa!',
+          description: 'Usuario registrado correctamente',
+          status: 'success',
+          duration: 2000,
+          position: 'top-right',
+          isClosable: true
+        })
+
         navigate('/auth/login', { replace: true })
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error)
+
+      if (error.response.status === 409) {
+        toast({
+          title: 'Email error',
+          description: 'El email ya fue registrado por otro usuario.',
+          status: 'error',
+          duration: 5000,
+          position: 'top-right',
+          isClosable: true
+        })
+      }
     }
   }
 
@@ -44,6 +67,11 @@ const Register = () => {
   }, [])
 
   const { Rol, continente, region } = registerData
+
+  // The user region must be one of this [Latam, Brazil, Otro]
+  const newRegions = region
+    ?.filter((region) => region !== 'America del Norte')
+    .map((e) => (e === 'Brasil' ? 'Brazil' : e))
 
   return (
     <Flex align="center" bg="white" justify="center" minH="100vh">
@@ -61,10 +89,10 @@ const Register = () => {
               <FormLabel mb={0} mt={4}>
                 Nombre de usuario
               </FormLabel>
-              <Field as={Input} name="username" placeholder="Username" type="text" />
-              {errors.username && touched.username && (
+              <Field as={Input} name="userName" placeholder="Username" type="text" />
+              {errors.userName && touched.userName && (
                 <Box>
-                  <Text color="tomato">{errors.username}</Text>
+                  <Text color="tomato">{errors.userName}</Text>
                 </Box>
               )}
               <FormLabel mb={0} mt={4}>
@@ -114,9 +142,9 @@ const Register = () => {
               <Field
                 as={Select}
                 placeholder="Selecciona un rol"
-                value={values.rol}
-                onBlur={() => setFieldTouched('rol', true)}
-                onChange={(e) => setFieldValue('rol', e.target.value)}
+                value={values.role}
+                onBlur={() => setFieldTouched('role', true)}
+                onChange={(e) => setFieldValue('role', e.target.value)}
               >
                 {Rol?.map((rol, index) => (
                   <option key={index} value={rol}>
@@ -124,9 +152,9 @@ const Register = () => {
                   </option>
                 ))}
               </Field>
-              {errors.rol && touched.rol && (
+              {errors.role && touched.role && (
                 <Box>
-                  <Text color="tomato">{errors.rol}</Text>
+                  <Text color="tomato">{errors.role}</Text>
                 </Box>
               )}
               <FormLabel mb={0} mt={4}>
@@ -150,6 +178,7 @@ const Register = () => {
                   <Text color="tomato">{errors.continent}</Text>
                 </Box>
               )}
+
               {values.continent === 'America' && (
                 <>
                   <FormLabel mb={0} mt={4}>
@@ -157,12 +186,12 @@ const Register = () => {
                   </FormLabel>
                   <Field
                     as={Select}
-                    placeholder="Selecciona Region"
+                    placeholder="Selecciona una región"
                     value={values.region}
                     onBlur={() => setFieldTouched('region', true)}
                     onChange={(e) => setFieldValue('region', e.target.value)}
                   >
-                    {region?.map((region, index) => (
+                    {newRegions?.map((region, index) => (
                       <option key={region + index} value={region}>
                         {region}
                       </option>
