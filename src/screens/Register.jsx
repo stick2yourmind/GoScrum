@@ -28,7 +28,7 @@ const Register = () => {
           teamID: hasTeam && teamID ? teamID : generateRandomID(),
           role,
           continent,
-          region
+          region: region ? region : 'Otro'
         }
       })
 
@@ -179,26 +179,30 @@ const Register = () => {
                 </Box>
               )}
 
-              <FormLabel mb={0} mt={4}>
-                Región
-              </FormLabel>
-              <Field
-                as={Select}
-                placeholder="Selecciona una región"
-                value={values.region}
-                onBlur={() => setFieldTouched('region', true)}
-                onChange={(e) => setFieldValue('region', e.target.value)}
-              >
-                {newRegions?.map((region, index) => (
-                  <option key={region + index} value={region}>
-                    {region}
-                  </option>
-                ))}
-              </Field>
-              {errors.region && touched.region && (
-                <Box>
-                  <Text color="tomato">{errors.region}</Text>
-                </Box>
+              {values.continent === 'America' && (
+                <>
+                  <FormLabel mb={0} mt={4}>
+                    Región
+                  </FormLabel>
+                  <Field
+                    as={Select}
+                    placeholder="Selecciona una región"
+                    value={values.region}
+                    onBlur={() => setFieldTouched('region', true)}
+                    onChange={(e) => setFieldValue('region', e.target.value)}
+                  >
+                    {newRegions?.map((region, index) => (
+                      <option key={region + index} value={region}>
+                        {region}
+                      </option>
+                    ))}
+                  </Field>
+                  {errors.region && touched.region && (
+                    <Box>
+                      <Text color="tomato">{errors.region}</Text>
+                    </Box>
+                  )}
+                </>
               )}
 
               <Flex align="center" justify="center" my={4}>
