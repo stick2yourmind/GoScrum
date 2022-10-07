@@ -50,7 +50,7 @@ const Login = () => {
               <Field
                 as={Input}
                 errorBorderColor="tomato"
-                isInvalid={errors.username}
+                isInvalid={touched.username && errors.username}
                 name="username"
                 placeholder="Username"
                 type="text"
@@ -66,7 +66,7 @@ const Login = () => {
               <Field
                 as={Input}
                 errorBorderColor="tomato"
-                isInvalid={errors.password}
+                isInvalid={touched.password && errors.password}
                 name="password"
                 placeholder="Password"
                 type="password"
