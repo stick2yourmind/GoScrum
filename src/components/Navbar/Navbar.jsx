@@ -7,6 +7,7 @@ import { logoutUser } from '../../store/slices/authSlice'
 const Navbar = () => {
   const dispatch = useDispatch()
   const { userName } = useSelector((state) => state.auth.userData)
+  const { tasks } = useSelector((state) => state.tasks)
 
   const onLogout = () => {
     dispatch(logoutUser())
@@ -44,7 +45,7 @@ const Navbar = () => {
       >
         Donar
       </Button>
-      <Text>Tareas Creadas: 3</Text>
+      <Text>Tareas Creadas: {tasks.length}</Text>
       <Text>{userName}</Text>
       <Button
         _hover={{
