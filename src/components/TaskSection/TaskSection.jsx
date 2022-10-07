@@ -45,23 +45,14 @@ const TaskSection = () => {
   }, [filter])
 
   return (
-    <Stack
-      bg="background.200"
-      boxShadow={{ sm: 'xl' }}
-      gap={2}
-      height={{ xl: '100%' }}
-      overflowY={{ xl: 'scroll' }}
-      p="12px"
-      rounded="2xl"
-      width="100%"
-    >
+    <Stack gap={2} height={{ xl: '100%' }} overflowY={{ xl: 'scroll' }} p="12px" width="100%">
       <Text fontSize="18px" fontWeight="semibold">
         Mis tareas
       </Text>
       <FilterForm filter={filter} setFilter={setFilter} />
 
       <Stack direction={{ base: 'column', md: 'row' }} height="100%">
-        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingX={2} paddingY={4} rounded="xl">
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingBottom={10} paddingX={2} rounded="xl">
           <Heading fontSize="2xl">Nuevas</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
@@ -73,7 +64,7 @@ const TaskSection = () => {
               })
             : null}
         </Box>
-        <Box bg="white" boxShadow="xl" flex={1} height="max-content" marginY={1} paddingX={2} paddingY={4} rounded="xl">
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingBottom={10} paddingX={2} rounded="xl">
           <Heading fontSize="2xl">En Proceso</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
@@ -85,7 +76,7 @@ const TaskSection = () => {
               })
             : null}
         </Box>
-        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingX={2} paddingY={4} rounded="xl">
+        <Box bg="white" boxShadow="xl" flex={1} height="max-content" paddingBottom={10} paddingX={2} rounded="xl">
           <Heading fontSize="2xl">Finalizadas</Heading>
           {tasksToShow.length > 0
             ? tasksToShow.map((task) => {
