@@ -21,6 +21,7 @@ const FilterForm = ({ setFilter, filter }) => {
 
   useEffect(() => {
     onTitleFilterChange(debouncedTitleFilter)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedTitleFilter])
 
   return (
