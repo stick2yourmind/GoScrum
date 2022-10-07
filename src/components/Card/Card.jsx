@@ -2,6 +2,7 @@ import { Stack, Text, Button, Heading, Container, useDisclosure } from '@chakra-
 import * as dayjs from 'dayjs'
 import timeZonePlugin from 'dayjs-ext/plugin/timeZone'
 
+import { deleteTask } from '../../store/slices/tasksSlice'
 import { TaskEditModal } from '../TaskEditModal/TaskEditModal'
 
 import Finished from './Badges/Finished'
@@ -30,7 +31,9 @@ const Card = ({ task }) => {
       >
         <Stack align="center" direction="row" justify="space-between">
           <Heading fontSize="15px">{task.title}</Heading>
-          <Button size="xs">X</Button>
+          <Button size="xs" onClick={() => deleteTask(task._id)}>
+            X
+          </Button>
         </Stack>
         <Text fontSize="11px" fontWeight="semibold">
           {dayjs(new Date(task.createdAt)).format('DD/MM/YYYY h:mm', { timeZone: 'America/Buenos_Aires' })}
