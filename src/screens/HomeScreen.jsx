@@ -1,4 +1,4 @@
-import { Stack, Grid } from '@chakra-ui/react'
+import { Stack, Grid, GridItem } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -23,15 +23,16 @@ const HomeScreen = () => {
         height="calc(100vh - 90px)"
         marginY="20px"
         paddingX={1}
-        templateColumns={{ base: '1fr', xl: 'repeat(2, 1fr)' }}
+        templateColumns={{ xl: 'repeat(2, 1fr)' }}
+        templateRows={{ base: 'repeat(2, 1fr)' }}
       >
-        <Stack height="50%">
+        <GridItem colSpan="1" rowSpan="1">
           <TaskForm />
-        </Stack>
+        </GridItem>
 
-        <Stack height="50%" m={4} p="14px">
+        <GridItem colSpan="1" height={{ xl: '34%' }} p="14px" rowSpan="1">
           <TaskSection />
-        </Stack>
+        </GridItem>
       </Grid>
     </>
   )
