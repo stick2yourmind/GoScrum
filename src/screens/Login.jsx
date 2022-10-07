@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, useToast } from '@chakra-ui/react'
+import { Box, Input, Text, Flex, Heading, Button, useToast, FormLabel } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -44,20 +44,48 @@ const Login = () => {
         >
           {({ errors, touched }) => (
             <Form>
-              <Field as={Input} my={2} name="username" placeholder="Username" type="text" />
+              <FormLabel fontSize="15px" mb={0} mt={4}>
+                Nombre de usuario
+              </FormLabel>
+              <Field
+                as={Input}
+                errorBorderColor="tomato"
+                isInvalid={touched.username && errors.username}
+                name="username"
+                placeholder="Username"
+                type="text"
+              />
               {errors.username && touched.username && (
                 <Box>
                   <Text color="tomato">{errors.username}</Text>
                 </Box>
               )}
-              <Field as={Input} my={2} name="password" placeholder="Password" type="password" />
+              <FormLabel fontSize="15px" mb={0} mt={4}>
+                Contraseña
+              </FormLabel>
+              <Field
+                as={Input}
+                errorBorderColor="tomato"
+                isInvalid={touched.password && errors.password}
+                name="password"
+                placeholder="Password"
+                type="password"
+              />
               {errors.password && touched.password && (
                 <Box>
                   <Text color="tomato">{errors.password}</Text>
                 </Box>
               )}
               <Flex align="center" justify="center" my={4}>
-                <Button colorScheme="purple" type="submit" variant="outline" width="full">
+                <Button
+                  _hover={{ bg: 'white', border: '2px', borderColor: 'purple.500', color: 'purple.500' }}
+                  bg="purple.500"
+                  border={2}
+                  borderColor="purple.500"
+                  color="white"
+                  type="submit"
+                  width="full"
+                >
                   Ingresar
                 </Button>
               </Flex>

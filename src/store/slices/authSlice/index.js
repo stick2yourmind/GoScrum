@@ -65,8 +65,6 @@ export const loginUser = (userName, password) => {
         dispatch(setUserData({ userData: user, token: token, status: 'authenticated' }))
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
 
       // The initial values ​​are kept but the loading is changed to false
       dispatch(setUserData({ userData: null, token: null, status: 'not-authenticated' }))
