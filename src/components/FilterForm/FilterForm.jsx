@@ -25,7 +25,7 @@ const FilterForm = ({ setFilter, filter }) => {
   }, [debouncedTitleFilter])
 
   return (
-    <Stack align="center" direction={{ base: 'column', sm: 'row' }}>
+    <Stack align="center" direction={{ base: 'column', md: 'row' }}>
       <Stack w="100%">
         <RadioGroup
           colorScheme="orange"
