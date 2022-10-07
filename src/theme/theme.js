@@ -31,8 +31,8 @@ export const theme = extendTheme({
     badges: {
       low: '#007BFF',
       new: '#FF452B',
-      high: '#FF452B',
-      inprogress: '#FBDE3F',
+      high: '#FA0707',
+      'in-progress': '#FBDE3F',
       finished: '#1EC876'
     },
     error: {
