@@ -68,7 +68,7 @@ const TaskForm = () => {
 
   return (
     <Stack fontSize={16} heigth="50%" p={6} rounded="md" w={'lg'} width="100%">
-      <Heading as="h1" fontSize="24px" mb={15}>
+      <Heading as="h1" fontSize="24px" mb={3}>
         Crear Tarea
       </Heading>
       <Formik initialValues={loginInit} validationSchema={TaskSchema} onSubmit={handleSubmit}>
