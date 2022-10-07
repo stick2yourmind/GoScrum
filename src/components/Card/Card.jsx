@@ -38,7 +38,7 @@ const Card = ({ task }) => {
         <Text fontSize="14px" fontWeight="semibold">
           {task.user.userName}
         </Text>
-        <Stack direction="row" flexWrap="wrap">
+        <Stack direction="row" flexWrap="wrap" mt={2}>
           {task.status === 'NEW' && <New />}
           {task.status === 'IN PROGRESS' && <InProgress />}
           {task.status === 'FINISHED' && <Finished />}
@@ -46,7 +46,7 @@ const Card = ({ task }) => {
           {task.importance === 'MEDIUM' && <Medium />}
           {task.importance === 'LOW' && <Low />}
         </Stack>
-        <Text mt={3}>{task.description}</Text>
+        <Text my={2}>{task.description}</Text>
         <Button
           _hover={{ color: 'primary.100', borderColor: 'primary.100', bg: 'white' }}
           bg="primary.100"
@@ -54,7 +54,6 @@ const Card = ({ task }) => {
           borderWidth={1}
           color="white"
           fontWeight="bold"
-          marginTop={2}
           size="xs"
           onClick={onOpen}
         >
