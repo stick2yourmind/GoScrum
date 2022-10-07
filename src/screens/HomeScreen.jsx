@@ -30,7 +30,15 @@ const HomeScreen = () => {
           <TaskForm />
         </GridItem>
 
-        <GridItem colSpan="1" height={{ xl: '34%' }} p="14px" rowSpan="1">
+        <GridItem
+          bg="background.200"
+          boxShadow={{ sm: 'xl' }}
+          colSpan="1"
+          height={{ xl: '65%' }}
+          marginBottom="20px"
+          rounded="2xl"
+          rowSpan="1"
+        >
           <TaskSection />
         </GridItem>
       </Grid>

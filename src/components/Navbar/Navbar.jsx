@@ -1,4 +1,4 @@
-import { Spacer, Image, Stack, Button, Text } from '@chakra-ui/react'
+import { Spacer, Image, Stack, Button, Text, Box } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Logo from '../../assets/GoScrum.png'
@@ -19,13 +19,13 @@ const Navbar = () => {
       bg="#FFFFFF"
       boxShadow="md"
       direction="row"
-      fontSize={{ base: '13px', sm: '15px' }}
+      fontSize={{ base: '13px', md: '15px' }}
       fontWeight="semibold"
       h="50px"
-      paddingX={{ base: '5px', sm: '20px' }}
-      spacing={{ base: 2, sm: 10 }}
+      paddingX={{ base: '5px', md: '20px' }}
+      spacing={{ base: 4, md: 10 }}
     >
-      <Image alt="GoScrum Logo" h={{ base: '15px', sm: '20px' }} src={Logo} w={{ base: '60px', sm: '80px' }} />
+      <Image alt="GoScrum Logo" h={{ base: '15px', sm: '20px' }} src={Logo} w={{ base: '50px', sm: '80px' }} />
       <Spacer />
       <Button
         _hover={{
@@ -40,13 +40,15 @@ const Navbar = () => {
         boxShadow="dark-lg"
         color="white"
         fontSize={{ base: '12px', sm: '15px' }}
-        h={{ base: '15px', sm: '25px' }}
+        h={{ base: '25px', sm: '25px' }}
         w={{ base: '35px', sm: '80px' }}
       >
         Donar
       </Button>
-      <Text>Tareas Creadas: {tasks.length}</Text>
-      <Text>{userName}</Text>
+      <Box display={'flex'} flexDirection={{ base: 'column', md: 'row-reverse' }} gap={{ md: 4 }}>
+        <Text>{userName}</Text>
+        <Text fontSize={{ base: '10px', md: 'inherit' }}>Tareas Creadas: {tasks.length}</Text>
+      </Box>
       <Button
         _hover={{
           bg: 'white',
@@ -60,7 +62,7 @@ const Navbar = () => {
         boxShadow="dark-lg"
         color="white"
         fontSize={{ base: '12px', sm: '15px' }}
-        h={{ base: '15px', sm: '25px' }}
+        h={{ base: '25px', sm: '25px' }}
         size="xs"
         w={{ sm: '35px' }}
         onClick={onLogout}
