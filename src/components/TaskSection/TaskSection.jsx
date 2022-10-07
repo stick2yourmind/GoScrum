@@ -48,6 +48,7 @@ const TaskSection = () => {
     <Stack
       bg="background.200"
       boxShadow={{ sm: 'xl' }}
+      height={{ xl: '100%' }}
       overflowY={{ xl: 'scroll' }}
       p="12px"
       rounded="2xl"
