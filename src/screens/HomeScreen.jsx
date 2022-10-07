@@ -1,4 +1,4 @@
-import { Stack, Grid, GridItem } from '@chakra-ui/react'
+import { Grid, GridItem } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
