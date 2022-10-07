@@ -19,33 +19,32 @@ const HomeScreen = () => {
 
   return (
     <>
-      <Navbar />
-      <Grid
-        alignItems={{ base: 'center', xl: 'baseline' }}
-        height="calc(100vh - 90px)"
-        marginY="20px"
-        paddingX={1}
-        templateColumns={{ xl: 'repeat(2, 1fr)' }}
-        templateRows={{ base: 'repeat(2, 1fr)' }}
-      >
-        <GridItem colSpan="1" rowSpan="1">
-          <DndProvider backend={HTML5Backend}>
-            <TaskForm />
-          </DndProvider>
-        </GridItem>
-
-        <GridItem
-          bg="background.200"
-          boxShadow={{ sm: 'xl' }}
-          colSpan="1"
-          height={{ xl: '65%' }}
-          marginBottom="20px"
-          rounded="2xl"
-          rowSpan="1"
+      <DndProvider backend={HTML5Backend}>
+        <Navbar />
+        <Grid
+          alignItems={{ base: 'center', xl: 'baseline' }}
+          height="calc(100vh - 90px)"
+          marginY="20px"
+          paddingX={1}
+          templateColumns={{ xl: 'repeat(2, 1fr)' }}
+          templateRows={{ base: 'repeat(2, 1fr)' }}
         >
-          <TaskSection />
-        </GridItem>
-      </Grid>
+          <GridItem colSpan="1" rowSpan="1">
+            <TaskForm />
+          </GridItem>
+
+          <GridItem
+            bg="background.200"
+            boxShadow={{ sm: 'xl' }}
+            colSpan="1"
+            marginBottom="20px"
+            rounded="2xl"
+            rowSpan="1"
+          >
+            <TaskSection />
+          </GridItem>
+        </Grid>
+      </DndProvider>
     </>
   )
 }
