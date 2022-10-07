@@ -58,3 +58,17 @@ export const startGettingInputData = () => {
     }
   }
 }
+
+export const deleteTask = async (id) => {
+  try {
+    const resp = await tasksApi.delete(`/task/${id}`)
+
+    if (resp.status === 200) {
+      startGetUserTasks()
+    }
+
+    console.log('eliminada')
+  } catch (error) {
+    console.log(error)
+  }
+}
