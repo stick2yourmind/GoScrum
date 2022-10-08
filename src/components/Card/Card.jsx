@@ -88,7 +88,14 @@ const Card = ({ task }) => {
         dispatch(startGetUserTasks())
       }
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error',
+        description: 'Algo salió mal',
+        status: 'error',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     }
   }
 
@@ -99,8 +106,24 @@ const Card = ({ task }) => {
       if (resp.status === 200) {
         dispatch(startGetUserTasks())
       }
+
+      toast({
+        title: 'Operación exitosa!',
+        description: 'Se eliminó correctamente',
+        status: 'success',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error',
+        description: 'Algo salió mal',
+        status: 'error',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     }
   }
 
