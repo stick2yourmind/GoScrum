@@ -32,7 +32,7 @@ export const startGetUserTasks = () => {
   return async (dispatch) => {
     try {
       dispatch(startLoading())
-      const resp = await tasksApi.get('/taskss')
+      const resp = await tasksApi.get('/task')
 
       if (resp.status === 200) {
         const { data } = resp
