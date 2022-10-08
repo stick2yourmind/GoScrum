@@ -19,7 +19,7 @@ const Card = ({ task }) => {
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'card',
+    type: `card_${task.status}`,
     item: task,
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult()
@@ -68,6 +68,18 @@ const Card = ({ task }) => {
     }
   }
 
+  const deleteTask = async (id) => {
+    try {
+      const resp = await tasksApi.delete(`/task/${id}`)
+
+      if (resp.status === 200) {
+        dispatch(startGetUserTasks())
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   return (
     <>
       <Container
@@ -84,7 +96,9 @@ const Card = ({ task }) => {
       >
         <Stack align="center" direction="row" justify="space-between">
           <Heading fontSize="15px">{task.title}</Heading>
-          <Button size="xs">X</Button>
+          <Button size="xs" onClick={() => deleteTask(task._id)}>
+            X
+          </Button>
         </Stack>
         <Text fontSize="11px" fontWeight="semibold">
           {dayjs(new Date(task.createdAt)).format('DD/MM/YYYY h:mm', { timeZone: 'America/Buenos_Aires' })}

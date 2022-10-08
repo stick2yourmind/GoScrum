@@ -16,36 +16,28 @@ const TaskSection = () => {
     radioFilter: 'all'
   })
 
-  const [{ canDrop: canDropNew, isOver: isOverNew }, dropNew] = useDrop(() => ({
-    accept: 'card',
+  const [{ canDropNew }, dropNew] = useDrop(() => ({
+    accept: ['card_IN PROGRESS', 'card_FINISHED'],
     drop: () => ({ name: 'newBox' }),
-    hover: (item) => item.status !== 'NEW',
     collect: (monitor) => ({
-      isOver: monitor.isOver({ shallow: true }),
-      canDrop: monitor.canDrop()
+      canDropNew: monitor.canDrop()
     })
   }))
 
-  useEffect(() => {
-    console.log(isOverNew)
-  }, [isOverNew])
-
-  const [{}, dropInProgress] = useDrop(() => ({
-    accept: 'card',
+  const [{ canDropIP }, dropInProgress] = useDrop(() => ({
+    accept: ['card_NEW', 'card_FINISHED'],
     drop: () => ({ name: 'inProgressBox' }),
     collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
+      canDropIP: monitor.canDrop()
     })
   }))
 
-  const [{}, dropFinished] = useDrop(() => ({
-    accept: 'card',
+  const [{ canDropFinished }, dropFinished] = useDrop(() => ({
+    accept: ['card_NEW', 'card_IN PROGRESS'],
     drop: () => ({ name: 'finishedBox' }),
 
     collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
+      canDropFinished: monitor.canDrop()
     })
   }))
 
@@ -88,11 +80,13 @@ const TaskSection = () => {
         <Box
           ref={dropNew}
           bg="white"
-          border={isOverNew ? '1px solid red' : '1px solid #08FF08'}
-          boxShadow="xl"
+          border="2px"
+          borderColor={canDropNew ? '#08FF08' : 'transparent'}
+          boxShadow="2xl"
           flex={1}
-          height="max-content"
+          height="100%"
           paddingBottom={10}
+          paddingTop={2}
           paddingX={2}
           rounded="xl"
         >
@@ -110,10 +104,13 @@ const TaskSection = () => {
         <Box
           ref={dropInProgress}
           bg="white"
-          boxShadow="xl"
+          border="2px"
+          borderColor={canDropIP ? '#08FF08' : 'transparent'}
+          boxShadow="2xl"
           flex={1}
-          height="max-content"
+          height="100%"
           paddingBottom={10}
+          paddingTop={2}
           paddingX={2}
           rounded="xl"
         >
@@ -131,10 +128,13 @@ const TaskSection = () => {
         <Box
           ref={dropFinished}
           bg="white"
-          boxShadow="xl"
+          border="2px"
+          borderColor={canDropFinished ? '#08FF08' : 'transparent'}
+          boxShadow="2xl"
           flex={1}
-          height="max-content"
+          height="100%"
           paddingBottom={10}
+          paddingTop={2}
           paddingX={2}
           rounded="xl"
         >
