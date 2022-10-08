@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 
 import { TaskSchema, loginInit } from '../../utils/schema/taskForm'
-import { startGettingInputData, startGetUserTasks } from '../../store/slices/tasksSlice'
+import { startGettingInputData, startGetUserTasks, startLoading } from '../../store/slices/tasksSlice'
 import tasksApi from '../../api/tasksApi'
 
 const CustomInputComponent = (props) => (
@@ -12,11 +12,13 @@ const CustomInputComponent = (props) => (
 )
 
 const TaskForm = () => {
-  const { inputData } = useSelector((state) => state.tasks)
+  const { inputData, loading } = useSelector((state) => state.tasks)
   const dispatch = useDispatch()
   const toast = useToast()
 
   const postTask = async (values, resetForm) => {
+    dispatch(startLoading())
+
     const newTask = {
       title: values.title,
       importance: values.priority,
@@ -163,6 +165,8 @@ const TaskForm = () => {
               border="2px"
               borderColor="primary.100"
               color="background.300"
+              colorScheme="blue"
+              isLoading={loading}
               marginTop={4}
               size="sm"
               type="submit"
