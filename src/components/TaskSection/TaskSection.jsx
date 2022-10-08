@@ -76,7 +76,7 @@ const TaskSection = () => {
       </Text>
       <FilterForm filter={filter} setFilter={setFilter} />
 
-      <Stack direction={{ base: 'column', md: 'row' }} height="100%">
+      <Stack direction={{ base: 'column', md: 'row' }}>
         <Box
           ref={dropNew}
           bg="white"
@@ -84,7 +84,7 @@ const TaskSection = () => {
           borderColor={canDropNew ? '#08FF08' : 'transparent'}
           boxShadow="2xl"
           flex={1}
-          height="100%"
+          overflow="hidden"
           paddingBottom={10}
           paddingTop={2}
           paddingX={2}
