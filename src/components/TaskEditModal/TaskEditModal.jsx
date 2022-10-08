@@ -170,7 +170,6 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                     borderColor="primary.100"
                     color="background.300"
                     size="sm"
-                    type="submit"
                     onClick={onClose}
                   >
                     Cancelar
