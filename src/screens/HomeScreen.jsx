@@ -1,8 +1,8 @@
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Grid, GridItem } from '@chakra-ui/react'
+import { Grid, GridItem, Text } from '@chakra-ui/react'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Navbar from '../components/Navbar/Navbar'
 import TaskSection from '../components/TaskSection/TaskSection'
@@ -11,6 +11,7 @@ import { startGetUserTasks } from '../store/slices/tasksSlice'
 
 const HomeScreen = () => {
   const dispatch = useDispatch()
+  const { teamID } = useSelector((state) => state.auth.userData)
 
   useEffect(() => {
     dispatch(startGetUserTasks())
@@ -30,6 +31,7 @@ const HomeScreen = () => {
           templateRows={{ base: 'repeat(2, 1fr)' }}
         >
           <GridItem colSpan="1" rowSpan="1">
+            <Text px={6}>Team ID: {teamID}</Text>
             <TaskForm />
           </GridItem>
 

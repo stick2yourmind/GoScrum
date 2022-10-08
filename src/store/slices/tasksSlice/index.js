@@ -20,11 +20,14 @@ export const taskSlice = createSlice({
     setInputData: (state, action) => {
       state.inputData = action.payload
       state.loading = false
+    },
+    finishLoading: (state) => {
+      state.loading = false
     }
   }
 })
 
-export const { setTasks, startLoading, setInputData } = taskSlice.actions
+export const { setTasks, startLoading, finishLoading, setInputData } = taskSlice.actions
 
 export default taskSlice.reducer
 
@@ -40,7 +43,8 @@ export const startGetUserTasks = () => {
         dispatch(setTasks(data.result))
       }
     } catch (error) {
-      console.log(error)
+      // eslint-disable-next-line no-console
+      console.log(error.message)
     }
   }
 }
@@ -54,7 +58,8 @@ export const startGettingInputData = () => {
         dispatch(setInputData(resp.data.result))
       }
     } catch (error) {
-      console.log(error)
+      // eslint-disable-next-line no-console
+      console.log(error.message)
     }
   }
 }

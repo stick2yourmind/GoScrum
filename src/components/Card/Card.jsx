@@ -1,4 +1,4 @@
-import { Stack, Text, Button, Heading, Container, useDisclosure } from '@chakra-ui/react'
+import { Stack, Text, Button, Heading, Container, useDisclosure, useToast } from '@chakra-ui/react'
 import * as dayjs from 'dayjs'
 import timeZonePlugin from 'dayjs-ext/plugin/timeZone'
 import { useDrag } from 'react-dnd'
@@ -18,6 +18,8 @@ import New from './Badges/New'
 const Card = ({ task }) => {
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
+
   const [{ isDragging }, drag] = useDrag(() => ({
     type: `card_${task.status}`,
     item: task,
@@ -27,17 +29,39 @@ const Card = ({ task }) => {
       if (dropResult) {
         if (dropResult.name === 'newBox' && item.status !== 'NEW') {
           modifyTaskStatus(task._id, task.title, task.importance, 'NEW', task.description)
-          console.log('Se dropeo en las nuevas')
+
+          toast({
+            title: 'Operación exitosa!',
+            description: 'Se cambio a: "Nuevas"',
+            status: 'success',
+            duration: 2500,
+            position: 'top-right',
+            isClosable: true
+          })
         }
         if (dropResult.name === 'inProgressBox' && item.status !== 'IN PROGRESS') {
           modifyTaskStatus(task._id, task.title, task.importance, 'IN PROGRESS', task.description)
 
-          console.log('Se dropeo en las En Progreso')
+          toast({
+            title: 'Operación exitosa!',
+            description: 'Se cambio a: "En progreso"',
+            status: 'success',
+            duration: 2500,
+            position: 'top-right',
+            isClosable: true
+          })
         }
         if (dropResult.name === 'finishedBox' && item.status !== 'FINISHED') {
           modifyTaskStatus(task._id, task.title, task.importance, 'FINISHED', task.description)
 
-          console.log('Se dropeo en las Finished')
+          toast({
+            title: 'Operación exitosa!',
+            description: 'Se cambio a: "Finalizadas"',
+            status: 'success',
+            duration: 2500,
+            position: 'top-right',
+            isClosable: true
+          })
         }
       }
     },
@@ -64,7 +88,14 @@ const Card = ({ task }) => {
         dispatch(startGetUserTasks())
       }
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error',
+        description: 'Algo salió mal',
+        status: 'error',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     }
   }
 
@@ -75,8 +106,24 @@ const Card = ({ task }) => {
       if (resp.status === 200) {
         dispatch(startGetUserTasks())
       }
+
+      toast({
+        title: 'Operación exitosa!',
+        description: 'Se eliminó correctamente',
+        status: 'success',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error',
+        description: 'Algo salió mal',
+        status: 'error',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     }
   }
 

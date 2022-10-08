@@ -9,16 +9,19 @@ import { RegisterSchema, registerInit } from '../utils/schema/register'
 import { getRegisterData } from '../store/slices/authSlice'
 import authApi from '../api/authApi'
 import generateRandomID from '../utils/functions/generateId'
+import { startLoading, finishLoading } from '../store/slices/tasksSlice'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState(false)
   const { registerData } = useSelector((state) => state.auth)
+  const { loading } = useSelector((state) => state.tasks)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const toast = useToast()
 
   const registerUser = async ({ userName, password, email, teamID, role, continent, region }) => {
+    dispatch(startLoading())
     try {
       const resp = await authApi.post('/auth/register', {
         user: {
@@ -45,9 +48,6 @@ const Register = () => {
         navigate('/auth/login', { replace: true })
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-
       if (error.response.status === 409) {
         toast({
           title: 'Email error',
@@ -59,6 +59,7 @@ const Register = () => {
         })
       }
     }
+    dispatch(finishLoading())
   }
 
   useEffect(() => {
@@ -89,7 +90,14 @@ const Register = () => {
               <FormLabel mb={0} mt={4}>
                 Nombre de usuario
               </FormLabel>
-              <Field as={Input} name="userName" placeholder="Username" type="text" />
+              <Field
+                as={Input}
+                errorBorderColor="tomato"
+                isInvalid={errors.userName && touched.userName}
+                name="userName"
+                placeholder="Username"
+                type="text"
+              />
               {errors.userName && touched.userName && (
                 <Box>
                   <Text color="tomato">{errors.userName}</Text>
@@ -98,7 +106,14 @@ const Register = () => {
               <FormLabel mb={0} mt={4}>
                 Contraseña
               </FormLabel>
-              <Field as={Input} name="password" placeholder="Password" type="password" />
+              <Field
+                as={Input}
+                errorBorderColor="tomato"
+                isInvalid={errors.password && touched.password}
+                name="password"
+                placeholder="Password"
+                type="password"
+              />
               {errors.password && touched.password && (
                 <Box>
                   <Text color="tomato">{errors.password}</Text>
@@ -107,7 +122,14 @@ const Register = () => {
               <FormLabel mb={0} mt={4}>
                 Email
               </FormLabel>
-              <Field as={Input} name="email" placeholder="Email" type="email" />
+              <Field
+                as={Input}
+                errorBorderColor="tomato"
+                isInvalid={errors.email && touched.email}
+                name="email"
+                placeholder="Email"
+                type="email"
+              />
               {errors.email && touched.email && (
                 <Box>
                   <Text color="tomato">{errors.email}</Text>
@@ -128,7 +150,15 @@ const Register = () => {
               </Flex>
               {hasTeam && (
                 <>
-                  <Field as={Input} mt={4} name="teamID" placeholder="Ingrese id del equipo" type="text" />
+                  <Field
+                    as={Input}
+                    errorBorderColor="tomato"
+                    isInvalid={errors.teamID && touched.teamID}
+                    mt={4}
+                    name="teamID"
+                    placeholder="Ingrese id del equipo"
+                    type="text"
+                  />
                   {errors.teamID && touched.teamID && (
                     <Box>
                       <Text color="tomato">{errors.teamID}</Text>
@@ -141,6 +171,8 @@ const Register = () => {
               </FormLabel>
               <Field
                 as={Select}
+                errorBorderColor="tomato"
+                isInvalid={errors.role && touched.role}
                 placeholder="Selecciona un rol"
                 value={values.role}
                 onBlur={() => setFieldTouched('role', true)}
@@ -162,6 +194,8 @@ const Register = () => {
               </FormLabel>
               <Field
                 as={Select}
+                errorBorderColor="tomato"
+                isInvalid={errors.continent && touched.continent}
                 placeholder="Selecciona un continente"
                 value={values.continent}
                 onBlur={() => setFieldTouched('continent', true)}
@@ -186,6 +220,8 @@ const Register = () => {
                   </FormLabel>
                   <Field
                     as={Select}
+                    errorBorderColor="tomato"
+                    isInvalid={errors.region && touched.region}
                     placeholder="Selecciona una región"
                     value={values.region}
                     onBlur={() => setFieldTouched('region', true)}
@@ -217,6 +253,7 @@ const Register = () => {
                   border="2px"
                   borderColor="primary.100"
                   color="white"
+                  isLoading={loading}
                   type="submit"
                   variant="outline"
                   width="full"
