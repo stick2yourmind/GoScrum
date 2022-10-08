@@ -9,16 +9,19 @@ import { RegisterSchema, registerInit } from '../utils/schema/register'
 import { getRegisterData } from '../store/slices/authSlice'
 import authApi from '../api/authApi'
 import generateRandomID from '../utils/functions/generateId'
+import { startLoading, finishLoading } from '../store/slices/tasksSlice'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState(false)
   const { registerData } = useSelector((state) => state.auth)
+  const { loading } = useSelector((state) => state.tasks)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const toast = useToast()
 
   const registerUser = async ({ userName, password, email, teamID, role, continent, region }) => {
+    dispatch(startLoading())
     try {
       const resp = await authApi.post('/auth/register', {
         user: {
@@ -45,9 +48,6 @@ const Register = () => {
         navigate('/auth/login', { replace: true })
       }
     } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-
       if (error.response.status === 409) {
         toast({
           title: 'Email error',
@@ -59,6 +59,7 @@ const Register = () => {
         })
       }
     }
+    dispatch(finishLoading())
   }
 
   useEffect(() => {
@@ -217,6 +218,7 @@ const Register = () => {
                   border="2px"
                   borderColor="primary.100"
                   color="white"
+                  isLoading={loading}
                   type="submit"
                   variant="outline"
                   width="full"
