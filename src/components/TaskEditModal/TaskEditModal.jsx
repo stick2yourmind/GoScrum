@@ -13,7 +13,8 @@ import {
   ModalOverlay,
   Select,
   Text,
-  Textarea
+  Textarea,
+  useToast
 } from '@chakra-ui/react'
 import { Field, Form, Formik } from 'formik'
 import { useRef } from 'react'
@@ -31,6 +32,7 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
   const { inputData } = useSelector((state) => state.tasks)
   const dispatch = useDispatch()
   const initialRef = useRef(null)
+  const toast = useToast()
 
   const onSubmitTask = async (values) => {
     try {
@@ -43,14 +45,28 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
         }
       })
 
-      console.log(resp)
-
       if (resp.status === 200) {
         dispatch(startGetUserTasks())
         onClose()
       }
+
+      toast({
+        title: 'Operación exitosa!',
+        description: 'Se editó correctamente',
+        status: 'success',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     } catch (error) {
-      console.log(error)
+      toast({
+        title: 'Error',
+        description: 'Algo salió mal',
+        status: 'error',
+        duration: 2500,
+        position: 'top-right',
+        isClosable: true
+      })
     }
   }
 
