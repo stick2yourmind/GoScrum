@@ -20,11 +20,14 @@ export const taskSlice = createSlice({
     setInputData: (state, action) => {
       state.inputData = action.payload
       state.loading = false
+    },
+    finishLoading: (state) => {
+      state.loading = false
     }
   }
 })
 
-export const { setTasks, startLoading, setInputData } = taskSlice.actions
+export const { setTasks, startLoading, finishLoading, setInputData } = taskSlice.actions
 
 export default taskSlice.reducer
 
