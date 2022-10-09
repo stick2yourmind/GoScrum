@@ -1,6 +1,7 @@
 import { Stack, Text, Button, Heading, Container, useDisclosure, useToast } from '@chakra-ui/react'
-import * as dayjs from 'dayjs'
-import timeZonePlugin from 'dayjs-ext/plugin/timeZone'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timeZonePlugin from 'dayjs/plugin/timezone'
 import { useDrag } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 
@@ -71,6 +72,7 @@ const Card = ({ task }) => {
     })
   }))
 
+  dayjs.extend(utc)
   dayjs.extend(timeZonePlugin)
 
   const modifyTaskStatus = async (id, title, importance, status, description) => {
