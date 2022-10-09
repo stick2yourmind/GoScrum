@@ -78,10 +78,10 @@ const Login = () => {
               )}
               <Flex align="center" justify="center" my={4}>
                 <Button
-                  _hover={{ bg: 'white', border: '2px', borderColor: 'purple.500', color: 'purple.500' }}
-                  bg="purple.500"
+                  _hover={{ bg: 'white', border: '2px', borderColor: 'primary.100', color: 'primary.100' }}
+                  bg="primary.100"
                   border={2}
-                  borderColor="purple.500"
+                  borderColor="primary.100"
                   color="white"
                   type="submit"
                   width="full"
@@ -93,7 +93,7 @@ const Login = () => {
           )}
         </Formik>
         <Link replace={true} to="/auth/register">
-          <Text color="#6B46C1" fontWeight="semibold" textAlign="end">
+          <Text color="primary.100" fontWeight="semibold" textAlign="end">
             Crear una cuenta
           </Text>
         </Link>
