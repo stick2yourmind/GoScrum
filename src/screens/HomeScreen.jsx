@@ -1,6 +1,6 @@
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Grid, GridItem, Text } from '@chakra-ui/react'
+import { Grid, GridItem, Tag, Text } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -31,7 +31,9 @@ const HomeScreen = () => {
           templateRows={{ base: 'repeat(2, 1fr)' }}
         >
           <GridItem colSpan="1" rowSpan="1">
-            <Text px={6}>Team ID: {teamID}</Text>
+            <Tag bg="primary.100" mx={6} size={'lg'} variant="solid">
+              Team ID: {teamID}
+            </Tag>
             <TaskForm />
           </GridItem>
 
