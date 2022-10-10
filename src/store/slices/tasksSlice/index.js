@@ -20,11 +20,41 @@ export const taskSlice = createSlice({
     setInputData: (state, action) => {
       state.inputData = action.payload
       state.loading = false
+    },
+    editTaskStatus: (state, action) => {
+      state.tasks = state.tasks.map((task) => {
+        if (task._id === action.payload.id) {
+          return {
+            ...task,
+            status: action.payload.status
+          }
+        }
+
+        return task
+      })
+    },
+    deleteTask: (state, action) => {
+      state.tasks = state.tasks.filter((task) => task._id !== action.payload.id)
+    },
+    editTask: (state, action) => {
+      state.tasks = state.tasks.map((task) => {
+        if (task._id === action.payload.id) {
+          return {
+            ...task,
+            title: action.payload.title,
+            status: action.payload.status,
+            importance: action.payload.importance,
+            description: action.payload.description
+          }
+        }
+
+        return task
+      })
     }
   }
 })
 
-export const { setTasks, startLoading, setInputData } = taskSlice.actions
+export const { setTasks, startLoading, setInputData, editTaskStatus, deleteTask, editTask } = taskSlice.actions
 
 export default taskSlice.reducer
 
