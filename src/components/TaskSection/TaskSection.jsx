@@ -1,7 +1,8 @@
-import { Stack, Text } from '@chakra-ui/react'
+import { Stack, Text, useMediaQuery } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
+import Card from '../Card/Card'
 import { CardsContainer } from '../CardsContainer/CardsContainer'
 import FilterForm from '../FilterForm/FilterForm'
 
@@ -14,6 +15,11 @@ const TaskSection = () => {
     priorityFilter: '',
     radioFilter: 'all'
   })
+  const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
+
+  useEffect(() => {
+    console.log(isLargerThan768)
+  }, [isLargerThan768])
 
   const filterTasks = () => {
     let tasks = allTasks
@@ -50,11 +56,19 @@ const TaskSection = () => {
       </Text>
       <FilterForm filter={filter} setFilter={setFilter} />
 
-      <Stack direction={{ base: 'column', md: 'row' }}>
-        <CardsContainer status="new" tasks={tasksToShow.filter((task) => task.status === 'NEW')} />
-        <CardsContainer status="inProgress" tasks={tasksToShow.filter((task) => task.status === 'IN PROGRESS')} />
-        <CardsContainer status="finished" tasks={tasksToShow.filter((task) => task.status === 'FINISHED')} />
-      </Stack>
+      {isLargerThan768 ? (
+        <Stack direction={{ base: 'column', md: 'row' }}>
+          <CardsContainer status="new" tasks={tasksToShow.filter((task) => task.status === 'NEW')} />
+          <CardsContainer status="inProgress" tasks={tasksToShow.filter((task) => task.status === 'IN PROGRESS')} />
+          <CardsContainer status="finished" tasks={tasksToShow.filter((task) => task.status === 'FINISHED')} />
+        </Stack>
+      ) : allTasks.length > 0 ? (
+        <Stack align={'center'} direction={'column'} justify="center">
+          {allTasks.map((task) => (
+            <Card key={task._id} task={task} />
+          ))}
+        </Stack>
+      ) : null}
     </Stack>
   )
 }

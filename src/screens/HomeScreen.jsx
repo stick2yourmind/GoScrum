@@ -1,6 +1,6 @@
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Grid, GridItem, Tag, Text } from '@chakra-ui/react'
+import { Grid, GridItem, Tag } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
