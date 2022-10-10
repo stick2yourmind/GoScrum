@@ -6,7 +6,7 @@ import { useDrag } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 
 import tasksApi from '../../api/tasksApi'
-import { startGetUserTasks } from '../../store/slices/tasksSlice'
+import { deleteTask, editTaskStatus } from '../../store/slices/tasksSlice'
 import { TaskEditModal } from '../TaskEditModal/TaskEditModal'
 
 import Finished from './Badges/Finished'
@@ -15,6 +15,9 @@ import InProgress from './Badges/InProgress'
 import Low from './Badges/Low'
 import Medium from './Badges/Medium'
 import New from './Badges/New'
+
+dayjs.extend(utc)
+dayjs.extend(timeZonePlugin)
 
 const Card = ({ task }) => {
   const dispatch = useDispatch()
@@ -72,9 +75,6 @@ const Card = ({ task }) => {
     })
   }))
 
-  dayjs.extend(utc)
-  dayjs.extend(timeZonePlugin)
-
   const modifyTaskStatus = async (id, title, importance, status, description) => {
     try {
       const resp = await tasksApi.patch(`/task/${id}`, {
@@ -87,7 +87,12 @@ const Card = ({ task }) => {
       })
 
       if (resp.status === 200) {
-        dispatch(startGetUserTasks())
+        dispatch(
+          editTaskStatus({
+            id,
+            status
+          })
+        )
       }
     } catch (error) {
       toast({
@@ -101,12 +106,12 @@ const Card = ({ task }) => {
     }
   }
 
-  const deleteTask = async (id) => {
+  const onDelete = async (id) => {
     try {
       const resp = await tasksApi.delete(`/task/${id}`)
 
       if (resp.status === 200) {
-        dispatch(startGetUserTasks())
+        dispatch(deleteTask({ id }))
       }
 
       toast({
@@ -145,7 +150,7 @@ const Card = ({ task }) => {
       >
         <Stack align="center" direction="row" justify="space-between">
           <Heading fontSize="15px">{task.title}</Heading>
-          <Button size="xs" onClick={() => deleteTask(task._id)}>
+          <Button size="xs" onClick={() => onDelete(task._id)}>
             X
           </Button>
         </Stack>

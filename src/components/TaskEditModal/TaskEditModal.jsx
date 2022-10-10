@@ -21,7 +21,7 @@ import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import tasksApi from '../../api/tasksApi'
-import { startGetUserTasks } from '../../store/slices/tasksSlice'
+import { editTask } from '../../store/slices/tasksSlice'
 import { TaskSchema } from '../../utils/schema/taskForm'
 
 const CustomInputComponent = (props) => (
@@ -46,7 +46,15 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
       })
 
       if (resp.status === 200) {
-        dispatch(startGetUserTasks())
+        dispatch(
+          editTask({
+            id: task._id,
+            title: values.title,
+            importance: values.priority,
+            status: values.status,
+            description: values.description
+          })
+        )
         onClose()
       }
 
