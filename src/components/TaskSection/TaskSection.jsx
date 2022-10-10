@@ -50,7 +50,7 @@ const TaskSection = () => {
   }, [filter])
 
   return (
-    <Stack gap={2} height={{ xl: '88vh' }} overflowY="scroll" p={6} width="100%">
+    <Stack gap={2} height={{ xl: '88vh' }} overflowY="auto" p={6} width="100%">
       <Text fontSize="18px" fontWeight="semibold">
         Mis tareas
       </Text>
