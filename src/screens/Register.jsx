@@ -20,10 +20,9 @@ import { Link } from 'react-router-dom'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 import { RegisterSchema, registerInit } from '../utils/schema/register'
-import { getRegisterData } from '../store/slices/authSlice'
+import { finishLoading, getRegisterData, startLoading } from '../store/slices/authSlice'
 import authApi from '../api/authApi'
 import generateRandomID from '../utils/functions/generateId'
-import { startLoading, finishLoading } from '../store/slices/tasksSlice'
 
 const Register = () => {
   const [hasTeam, setHasTeam] = useState(false)
