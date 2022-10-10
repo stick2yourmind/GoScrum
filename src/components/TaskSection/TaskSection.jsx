@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import { Stack, Text, useMediaQuery } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import Card from '../Card/Card'
-=======
-import { Stack, Text } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
-
->>>>>>> 8a3dcdb5c5b8e7a12b5bfff1d9f1a92820ffd638
 import { CardsContainer } from '../CardsContainer/CardsContainer'
 import FilterForm from '../FilterForm/FilterForm'
 
@@ -24,13 +17,6 @@ const TaskSection = () => {
   })
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
 
-<<<<<<< HEAD
-  useEffect(() => {
-    console.log(isLargerThan768)
-  }, [isLargerThan768])
-
-=======
->>>>>>> 8a3dcdb5c5b8e7a12b5bfff1d9f1a92820ffd638
   const filterTasks = () => {
     let tasks = allTasks
 
