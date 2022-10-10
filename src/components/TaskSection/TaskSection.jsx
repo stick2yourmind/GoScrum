@@ -1,8 +1,13 @@
+
 import { Stack, Text, useMediaQuery } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import Card from '../Card/Card'
+import { Stack, Text } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+
 import { CardsContainer } from '../CardsContainer/CardsContainer'
 import FilterForm from '../FilterForm/FilterForm'
 
