@@ -75,8 +75,8 @@ const Register = () => {
     .map((e) => (e === 'Brasil' ? 'Brazil' : e))
 
   return (
-    <Flex align="center" bg="white" justify="center" minH="100vh">
-      <Box p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg={{ md: 'gray.100' }} justify="center" minH="100vh">
+      <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
