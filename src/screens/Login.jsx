@@ -34,7 +34,7 @@ const Login = () => {
   return loading ? (
     <Spinner />
   ) : (
-    <Flex align="center" bg="gray.100" h="100vh" justify="center">
+    <Flex align="center" bg={{ md: 'gray.100' }} h="100vh" justify="center">
       <Box bg="white" p={6} rounded="md" w={'lg'}>
         <Heading as="h1">Iniciar sesión</Heading>
         <Formik
