@@ -1,9 +1,23 @@
 import { Field, Form, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, Select, FormLabel, Switch, useToast } from '@chakra-ui/react'
+import {
+  Box,
+  Input,
+  Text,
+  Flex,
+  Heading,
+  Button,
+  Select,
+  FormLabel,
+  Switch,
+  useToast,
+  useColorMode,
+  IconButton
+} from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 import { RegisterSchema, registerInit } from '../utils/schema/register'
 import { getRegisterData } from '../store/slices/authSlice'
@@ -15,6 +29,7 @@ const Register = () => {
   const [hasTeam, setHasTeam] = useState(false)
   const { registerData } = useSelector((state) => state.auth)
   const { loading } = useSelector((state) => state.tasks)
+  const { colorMode, toggleColorMode } = useColorMode()
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -75,8 +90,20 @@ const Register = () => {
     .map((e) => (e === 'Brasil' ? 'Brazil' : e))
 
   return (
-    <Flex align="center" bg={{ md: 'gray.100' }} justify="center" minH="100vh">
-      <Box bg="white" p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg={colorMode === 'light' ? 'gray.200' : 'gray.900'} justify="center" minH="100vh">
+      <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} p={6} rounded="md" w={'lg'}>
+        <Flex alignItems="center" justifyContent="end">
+          <IconButton
+            margin
+            aria-label="Color mode switcher"
+            colorScheme="cyan"
+            icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+            variant="outline"
+            onClick={toggleColorMode}
+          >
+            Switch mode
+          </IconButton>
+        </Flex>
         <Heading as="h1">Registro</Heading>
         <Formik
           initialValues={registerInit}
@@ -242,22 +269,7 @@ const Register = () => {
               )}
 
               <Flex align="center" justify="center" my={4}>
-                <Button
-                  _hover={{
-                    bg: 'white',
-                    color: 'primary.100',
-                    border: '2px',
-                    borderColor: 'primary.100'
-                  }}
-                  bg="primary.100"
-                  border="2px"
-                  borderColor="primary.100"
-                  color="white"
-                  isLoading={loading}
-                  type="submit"
-                  variant="outline"
-                  width="full"
-                >
+                <Button isLoading={loading} type="submit" variant="primary" width="full">
                   Registrar
                 </Button>
               </Flex>
@@ -265,7 +277,7 @@ const Register = () => {
           )}
         </Formik>
         <Link replace={true} to="/auth/">
-          <Text color="primary.100" fontWeight="semibold" textAlign="end">
+          <Text color={colorMode === 'light' ? 'primary.100' : 'gray.100'} fontWeight="semibold" textAlign="end">
             Ya tengo una cuenta
           </Text>
         </Link>

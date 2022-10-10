@@ -1,7 +1,12 @@
 import { extendTheme } from '@chakra-ui/react'
 
+import { buttonStyles as Button } from './buttonStyles'
+
 export const theme = extendTheme({
+  initialColorMode: 'light',
+  useSystemColorMode: false,
   components: {
+    Button,
     Badge: {
       baseStyle: {
         textTransform: 'lowercase',

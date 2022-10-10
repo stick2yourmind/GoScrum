@@ -1,5 +1,17 @@
 import { Field, Form, Formik } from 'formik'
-import { Box, Input, Text, Flex, Heading, Button, useToast, FormLabel } from '@chakra-ui/react'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
+import {
+  Box,
+  Input,
+  Text,
+  Flex,
+  Heading,
+  Button,
+  useToast,
+  FormLabel,
+  useColorMode,
+  IconButton
+} from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -12,6 +24,7 @@ const Login = () => {
   const dispatch = useDispatch()
   const { status, loading, errorMsg } = useSelector((state) => state.auth)
   const toast = useToast()
+  const { colorMode, toggleColorMode } = useColorMode()
 
   useEffect(() => {
     if (!loading && status === 'not-authenticated' && errorMsg) {
@@ -34,8 +47,21 @@ const Login = () => {
   return loading ? (
     <Spinner />
   ) : (
-    <Flex align="center" bg={{ md: 'gray.100' }} h="100vh" justify="center">
-      <Box bg="white" p={6} rounded="md" w={'lg'}>
+    <Flex align="center" bg={colorMode === 'light' ? 'gray.200' : 'gray.900'} h="100vh" justify="center">
+      <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} p={6} rounded="md" w={'lg'}>
+        <Flex alignItems="center" justifyContent="end">
+          <IconButton
+            margin
+            aria-label="Color mode switcher"
+            colorScheme="cyan"
+            icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+            variant="outline"
+            onClick={toggleColorMode}
+          >
+            Switch mode
+          </IconButton>
+        </Flex>
+
         <Heading as="h1">Iniciar sesión</Heading>
         <Formik
           initialValues={loginInit}
@@ -78,13 +104,14 @@ const Login = () => {
               )}
               <Flex align="center" justify="center" my={4}>
                 <Button
-                  _hover={{ bg: 'white', border: '2px', borderColor: 'primary.100', color: 'primary.100' }}
-                  bg="primary.100"
-                  border={2}
-                  borderColor="primary.100"
-                  color="white"
+                  // _hover={{ bg: 'white', border: '2px', borderColor: 'primary.100', color: 'primary.100' }}
+                  // bg={bgColor}
+                  // border={2}
+                  // borderColor="primary.100"
+                  // color="white"
                   type="submit"
-                  width="full"
+                  // width="full"
+                  variant="primary"
                 >
                   Ingresar
                 </Button>
@@ -93,7 +120,7 @@ const Login = () => {
           )}
         </Formik>
         <Link replace={true} to="/auth/register">
-          <Text color="primary.100" fontWeight="semibold" textAlign="end">
+          <Text color={colorMode === 'light' ? 'primary.100' : 'gray.100'} fontWeight="semibold" textAlign="end">
             Crear una cuenta
           </Text>
         </Link>
