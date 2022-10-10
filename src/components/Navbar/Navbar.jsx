@@ -1,5 +1,6 @@
-import { Spacer, Image, Stack, Button, Text, Box, Link } from '@chakra-ui/react'
+import { Spacer, Image, Stack, Button, Text, Box, Link, IconButton, useColorMode } from '@chakra-ui/react'
 import { useDispatch, useSelector } from 'react-redux'
+import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 
 import Logo from '../../assets/GoScrum.png'
 import { logoutUser } from '../../store/slices/authSlice'
@@ -8,6 +9,7 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const { userName } = useSelector((state) => state.auth.userData)
   const { tasks } = useSelector((state) => state.tasks)
+  const { colorMode, toggleColorMode } = useColorMode()
 
   const onLogout = () => {
     dispatch(logoutUser())
@@ -27,6 +29,16 @@ const Navbar = () => {
     >
       <Image alt="GoScrum Logo" h={{ base: '15px', sm: '20px' }} src={Logo} w={{ base: '50px', sm: '80px' }} />
       <Spacer />
+      <IconButton
+        margin
+        aria-label="Color mode switcher"
+        colorScheme="cyan"
+        icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+        variant="outline"
+        onClick={toggleColorMode}
+      >
+        Switch mode
+      </IconButton>
       <Link
         isExternal
         _hover={{
