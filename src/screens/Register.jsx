@@ -98,11 +98,12 @@ const Register = () => {
       <Box bg={{ base: '', sm: colorMode === 'light' ? 'white' : 'gray.800' }} p={6} rounded="md" w={'lg'}>
         <Flex alignItems="center" justifyContent="end">
           <IconButton
-            margin
             aria-label="Color mode switcher"
-            colorScheme="cyan"
+            h={{ base: '45px', sm: '45px' }}
             icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
-            variant="outline"
+            size={{ base: 'xl' }}
+            variant="primary"
+            w={{ sm: '45px' }}
             onClick={toggleColorMode}
           >
             Switch mode
