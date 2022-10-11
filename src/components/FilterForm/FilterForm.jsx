@@ -1,4 +1,4 @@
-import { Stack, Radio, RadioGroup, Input, Select } from '@chakra-ui/react'
+import { Stack, Radio, RadioGroup, Input, Select, useColorMode } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 import useDebouncer from '../../hooks/useDebouncer'
@@ -6,6 +6,7 @@ import useDebouncer from '../../hooks/useDebouncer'
 const FilterForm = ({ setFilter, filter }) => {
   const [title, setTitle] = useState('')
   const debouncedTitleFilter = useDebouncer(title, 500)
+  const { colorMode } = useColorMode()
 
   const onRadioChange = (value) => {
     setFilter({ ...filter, radioFilter: value })
@@ -28,7 +29,7 @@ const FilterForm = ({ setFilter, filter }) => {
     <Stack align="center" direction={{ base: 'column', md: 'row' }}>
       <Stack w="100%">
         <RadioGroup
-          colorScheme="orange"
+          colorScheme={colorMode === 'light' ? 'orange' : 'teal'}
           size="md"
           value={filter.radioFilter}
           onChange={(value) => {

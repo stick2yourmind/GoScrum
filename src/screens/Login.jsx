@@ -47,8 +47,13 @@ const Login = () => {
   return loading ? (
     <Spinner />
   ) : (
-    <Flex align="center" bg={colorMode === 'light' ? 'gray.200' : 'gray.900'} h="100vh" justify="center">
-      <Box bg={colorMode === 'light' ? 'white' : 'gray.800'} p={6} rounded="md" w={'lg'}>
+    <Flex
+      align="center"
+      bg={{ base: colorMode === 'light' ? 'white' : 'gray.900', sm: colorMode === 'light' ? 'gray.200' : 'gray.900' }}
+      h="100vh"
+      justify="center"
+    >
+      <Box bg={{ base: '', sm: colorMode === 'light' ? 'white' : 'gray.800' }} p={6} rounded="md" w={'lg'}>
         <Flex alignItems="center" justifyContent="end">
           <IconButton
             margin

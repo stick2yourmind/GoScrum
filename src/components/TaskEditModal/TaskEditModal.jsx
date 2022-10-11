@@ -150,36 +150,10 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                 </ModalBody>
 
                 <ModalFooter gap={4} justifyContent="end">
-                  <Button
-                    _hover={{
-                      bg: 'background.300',
-                      color: 'primary.100',
-                      borderColor: 'primary.100',
-                      border: '2px'
-                    }}
-                    bg="primary.100"
-                    border="2px"
-                    borderColor="primary.100"
-                    color="background.300"
-                    size="sm"
-                    type="submit"
-                  >
+                  <Button size="sm" type="submit" variant="primary">
                     Guardar
                   </Button>
-                  <Button
-                    _hover={{
-                      bg: 'background.300',
-                      color: 'error.100',
-                      borderColor: 'error.100',
-                      border: '2px'
-                    }}
-                    bg="error.100"
-                    border="2px"
-                    borderColor="primary.100"
-                    color="background.300"
-                    size="sm"
-                    onClick={onClose}
-                  >
+                  <Button size="sm" variant="secondary" onClick={onClose}>
                     Cancelar
                   </Button>
                 </ModalFooter>

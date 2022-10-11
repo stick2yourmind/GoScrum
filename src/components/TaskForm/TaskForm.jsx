@@ -156,22 +156,7 @@ const TaskForm = () => {
                 <Text color="tomato">{errors.description}</Text>
               </Box>
             )}
-            <Button
-              _hover={{
-                bg: 'background.300',
-                color: 'primary.100'
-              }}
-              bg="primary.100"
-              border="2px"
-              borderColor="primary.100"
-              color="background.300"
-              colorScheme="blue"
-              isLoading={loading}
-              marginTop={4}
-              size="sm"
-              type="submit"
-              width="80px"
-            >
+            <Button isLoading={loading} marginTop={4} size="sm" type="submit" variant="primary" width="80px">
               Crear
             </Button>
           </form>

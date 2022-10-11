@@ -1,4 +1,4 @@
-import { Stack, Text, useMediaQuery } from '@chakra-ui/react'
+import { Stack, Text, useColorMode, useMediaQuery } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -16,6 +16,7 @@ const TaskSection = () => {
     radioFilter: 'all'
   })
   const [isLargerThan768] = useMediaQuery('(min-width: 768px)')
+  const { colorMode } = useColorMode()
 
   const filterTasks = () => {
     let tasks = allTasks
@@ -46,7 +47,15 @@ const TaskSection = () => {
   }, [filter])
 
   return (
-    <Stack gap={2} height={{ xl: '88vh' }} overflowY="auto" p={6} width="100%">
+    <Stack
+      bg={{ base: colorMode === 'light' ? 'white' : 'gray.800', sm: colorMode === 'light' ? 'white' : 'gray.900' }}
+      gap={2}
+      height={{ xl: '88vh' }}
+      overflowY="auto"
+      p={6}
+      rounded="xl"
+      width="100%"
+    >
       <Text fontSize="18px" fontWeight="semibold">
         Mis tareas
       </Text>
@@ -58,9 +67,9 @@ const TaskSection = () => {
           <CardsContainer status="inProgress" tasks={tasksToShow.filter((task) => task.status === 'IN PROGRESS')} />
           <CardsContainer status="finished" tasks={tasksToShow.filter((task) => task.status === 'FINISHED')} />
         </Stack>
-      ) : allTasks.length > 0 ? (
+      ) : tasksToShow.length > 0 ? (
         <Stack align={'center'} direction={'column'} justify="center">
-          {allTasks.map((task) => (
+          {tasksToShow.map((task) => (
             <Card key={task._id} task={task} />
           ))}
         </Stack>
