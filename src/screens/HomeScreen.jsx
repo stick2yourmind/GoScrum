@@ -1,6 +1,6 @@
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { Grid, GridItem, Tag, useColorMode } from '@chakra-ui/react'
+import { Button, Grid, GridItem, Tag, Text, useClipboard, useColorMode } from '@chakra-ui/react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,6 +13,7 @@ const HomeScreen = () => {
   const dispatch = useDispatch()
   const { teamID } = useSelector((state) => state.auth.userData)
   const { colorMode } = useColorMode()
+  const { hasCopied, onCopy } = useClipboard(teamID)
 
   useEffect(() => {
     dispatch(startGetUserTasks())
@@ -33,7 +34,17 @@ const HomeScreen = () => {
         >
           <GridItem colSpan="1" rowSpan="1">
             <Tag bg={colorMode === 'light' ? 'primary.100' : 'teal.500'} mx={6} size={'lg'} variant="solid">
-              Team ID: {teamID}
+              <Text fontSize={{ base: '12px', sm: '15px' }}>Team ID: {teamID}</Text>
+              <Button
+                bg={colorMode === 'light' ? '#FAFAFA' : 'gray.900'}
+                color={colorMode === 'light' ? 'primary.100' : 'white'}
+                ml={5}
+                p={3}
+                size="xs"
+                onClick={onCopy}
+              >
+                {hasCopied ? 'Copied' : 'Copy'}
+              </Button>
             </Tag>
             <TaskForm />
           </GridItem>
