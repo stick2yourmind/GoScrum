@@ -1,4 +1,5 @@
 import { extendTheme } from '@chakra-ui/react'
+import { mode } from '@chakra-ui/theme-tools'
 
 import { buttonStyles as Button } from './buttonStyles'
 
@@ -7,6 +8,23 @@ export const theme = extendTheme({
   useSystemColorMode: false,
   components: {
     Button,
+    Input: {
+      baseStyle: (props) => ({
+        field: {
+          _placeholder: {
+            color: mode('black', 'white')(props)
+          }
+        }
+      })
+    },
+    Textarea: {
+      baseStyle: (props) => ({
+        _placeholder: {
+          color: mode('black', 'white')(props)
+        }
+      })
+    },
+
     Badge: {
       baseStyle: {
         textTransform: 'lowercase',
