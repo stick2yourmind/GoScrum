@@ -1,4 +1,4 @@
-import { Stack, Text, Button, Heading, Container, useDisclosure, useToast } from '@chakra-ui/react'
+import { Stack, Text, Button, Heading, Container, useDisclosure, useToast, useColorMode } from '@chakra-ui/react'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timeZonePlugin from 'dayjs/plugin/timezone'
@@ -23,6 +23,7 @@ const Card = ({ task }) => {
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
+  const { colorMode } = useColorMode()
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: `card_${task.status}`,
@@ -138,8 +139,8 @@ const Card = ({ task }) => {
     <>
       <Container
         ref={drag}
-        bgColor="#FAFAFA"
-        borderColor="gray.300"
+        bgColor={colorMode === 'light' ? '#FAFAFA' : 'gray.900'}
+        borderColor={colorMode === 'light' ? 'gray.300' : 'teal.500'}
         borderWidth="1px"
         flex={1}
         mt={2}
@@ -150,7 +151,7 @@ const Card = ({ task }) => {
       >
         <Stack align="center" direction="row" justify="space-between">
           <Heading fontSize="15px">{task.title}</Heading>
-          <Button size="xs" onClick={() => onDelete(task._id)}>
+          <Button size="xs" variant="primary" width="10px" onClick={() => onDelete(task._id)}>
             X
           </Button>
         </Stack>
@@ -169,16 +170,7 @@ const Card = ({ task }) => {
           {task.importance === 'LOW' && <Low />}
         </Stack>
         <Text my={2}>{task.description}</Text>
-        <Button
-          _hover={{ color: 'primary.100', borderColor: 'primary.100', bg: 'white' }}
-          bg="primary.100"
-          borderColor="primary.100"
-          borderWidth={1}
-          color="white"
-          fontWeight="bold"
-          size="xs"
-          onClick={onOpen}
-        >
+        <Button fontWeight="bold" size="xs" variant="primary" width="60px" onClick={onOpen}>
           Ver mas
         </Button>
       </Container>

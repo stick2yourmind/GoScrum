@@ -1,4 +1,4 @@
-import { Heading, Skeleton } from '@chakra-ui/react'
+import { Heading, Skeleton, useColorMode } from '@chakra-ui/react'
 import { useDrop } from 'react-dnd'
 import { useSelector } from 'react-redux'
 
@@ -24,6 +24,7 @@ const statusConfig = {
 
 export const CardsContainer = ({ tasks, status }) => {
   const { loading } = useSelector((state) => state.tasks)
+  const { colorMode } = useColorMode()
 
   const [{ canDrop }, drop] = useDrop(() => ({
     accept: statusConfig[status].accept,
@@ -36,7 +37,7 @@ export const CardsContainer = ({ tasks, status }) => {
   return (
     <Skeleton
       ref={drop}
-      bg="white"
+      bg={colorMode === 'light' ? 'white' : 'gray.800'}
       border="2px"
       borderColor={canDrop ? '#08FF08' : 'transparent'}
       boxShadow="2xl"
