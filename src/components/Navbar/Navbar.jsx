@@ -32,20 +32,10 @@ const Navbar = () => {
         alt="GoScrum Logo"
         h={{ base: '15px', sm: '20px' }}
         src={colorMode === 'light' ? Logo : DarkLogo}
-        w={{ base: '50px', sm: '80px' }}
+        w={{ base: '60px', sm: '80px' }}
       />
       <Spacer />
-      <IconButton
-        margin
-        aria-label="Color mode switcher"
-        colorScheme="cyan"
-        icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
-        size={{ base: 'xs', sm: 'md' }}
-        variant="outline"
-        onClick={toggleColorMode}
-      >
-        Switch mode
-      </IconButton>
+
       <Button
         isExternal
         alignItems="center"
@@ -60,20 +50,34 @@ const Navbar = () => {
       >
         Donar
       </Button>
+
       <Box display={'flex'} flexDirection={{ base: 'column', md: 'row-reverse' }} gap={{ md: 4 }}>
         <Text>{userName}</Text>
         <Text fontSize={{ base: '10px', md: 'inherit' }}>Tareas Creadas: {tasks.length}</Text>
       </Box>
-      <Button
-        fontSize={{ base: '12px', sm: '15px' }}
-        h={{ base: '25px', sm: '25px' }}
-        size="xs"
-        variant="primary"
-        w={{ sm: '35px' }}
-        onClick={onLogout}
-      >
-        X
-      </Button>
+      <Stack direction="row">
+        <IconButton
+          aria-label="Color mode switcher"
+          h={{ base: '25px', sm: '25px' }}
+          icon={colorMode === 'light' ? <SunIcon /> : <MoonIcon />}
+          size={{ base: 'xs' }}
+          variant="primary"
+          w={{ sm: '45px' }}
+          onClick={toggleColorMode}
+        >
+          Switch mode
+        </IconButton>
+        <Button
+          fontSize={{ base: '12px', sm: '15px' }}
+          h={{ base: '25px', sm: '25px' }}
+          size="xs"
+          variant="primary"
+          w={{ sm: '35px' }}
+          onClick={onLogout}
+        >
+          X
+        </Button>
+      </Stack>
     </Stack>
   )
 }

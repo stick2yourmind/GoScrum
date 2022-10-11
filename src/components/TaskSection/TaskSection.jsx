@@ -48,7 +48,7 @@ const TaskSection = () => {
 
   return (
     <Stack
-      bg={colorMode === 'light' ? 'white' : 'gray.900'}
+      bg={{ base: colorMode === 'light' ? 'white' : 'gray.800', sm: colorMode === 'light' ? 'white' : 'gray.900' }}
       gap={2}
       height={{ xl: '88vh' }}
       overflowY="auto"

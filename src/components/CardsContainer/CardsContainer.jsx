@@ -41,7 +41,7 @@ export const CardsContainer = ({ tasks, status }) => {
       border="2px"
       borderColor={canDrop ? '#08FF08' : 'transparent'}
       boxShadow="2xl"
-      endColor="white"
+      endColor={colorMode === 'light' ? 'gray.300' : 'gray.700'}
       flex={1}
       isLoaded={!loading}
       minHeight="70vh"
@@ -50,7 +50,7 @@ export const CardsContainer = ({ tasks, status }) => {
       paddingTop={2}
       paddingX={2}
       rounded="xl"
-      startColor="primary.100"
+      startColor={colorMode === 'light' ? 'primary.100' : 'gray.900'}
     >
       <Heading fontSize="2xl">{statusConfig[status].heading}</Heading>
       {tasks.length > 0 ? tasks.map((task) => <Card key={task._id} task={task} />) : null}
