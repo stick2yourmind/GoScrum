@@ -7,7 +7,8 @@ export const taskSlice = createSlice({
   initialState: {
     tasks: [],
     loading: false,
-    inputData: null
+    inputData: null,
+    message: null
   },
   reducers: {
     setTasks: (state, action) => {

@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 import timeZonePlugin from 'dayjs/plugin/timezone'
 import { useDrag } from 'react-dnd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import tasksApi from '../../api/tasksApi'
 import { deleteTask, editTaskStatus } from '../../store/slices/tasksSlice'
@@ -21,8 +21,9 @@ dayjs.extend(timeZonePlugin)
 
 const Card = ({ task }) => {
   const dispatch = useDispatch()
-  const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
+  const { userData } = useSelector((state) => state.auth)
+  const { isOpen, onOpen, onClose } = useDisclosure()
   const { colorMode } = useColorMode()
 
   const [{ isDragging }, drag] = useDrag(() => ({
@@ -31,9 +32,20 @@ const Card = ({ task }) => {
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult()
 
+      if (userData.role !== 'Team Leader' && item.user.userName !== userData.userName) {
+        return toast({
+          title: 'Error!',
+          description: 'No tienes los permisos para esta accion',
+          status: 'error',
+          duration: 2500,
+          position: 'top-right',
+          isClosable: true
+        })
+      }
+
       if (dropResult) {
         if (dropResult.name === 'newBox' && item.status !== 'NEW') {
-          modifyTaskStatus(task._id, task.title, task.importance, 'NEW', task.description)
+          modifyTaskStatus(item._id, item.title, item.importance, 'NEW', item.description)
 
           toast({
             title: 'Operación exitosa!',
@@ -45,7 +57,7 @@ const Card = ({ task }) => {
           })
         }
         if (dropResult.name === 'inProgressBox' && item.status !== 'IN PROGRESS') {
-          modifyTaskStatus(task._id, task.title, task.importance, 'IN PROGRESS', task.description)
+          modifyTaskStatus(item._id, item.title, item.importance, 'IN PROGRESS', item.description)
 
           toast({
             title: 'Operación exitosa!',
@@ -57,7 +69,7 @@ const Card = ({ task }) => {
           })
         }
         if (dropResult.name === 'finishedBox' && item.status !== 'FINISHED') {
-          modifyTaskStatus(task._id, task.title, task.importance, 'FINISHED', task.description)
+          modifyTaskStatus(item._id, item.title, item.importance, 'FINISHED', item.description)
 
           toast({
             title: 'Operación exitosa!',
@@ -109,6 +121,17 @@ const Card = ({ task }) => {
 
   const onDelete = async (id) => {
     try {
+      if (userData.role !== 'Team Leader' && task.user.userName !== userData.userName) {
+        return toast({
+          title: 'Error!',
+          description: 'No tienes los permisos para esta accion',
+          status: 'error',
+          duration: 2500,
+          position: 'top-right',
+          isClosable: true
+        })
+      }
+
       const resp = await tasksApi.delete(`/task/${id}`)
 
       if (resp.status === 200) {

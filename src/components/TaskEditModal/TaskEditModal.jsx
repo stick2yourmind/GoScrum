@@ -30,12 +30,24 @@ const CustomInputComponent = (props) => (
 
 export const TaskEditModal = ({ isOpen, onClose, task }) => {
   const { inputData } = useSelector((state) => state.tasks)
+  const { userData } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
   const initialRef = useRef(null)
   const toast = useToast()
 
   const onSubmitTask = async (values) => {
     try {
+      if (userData.role !== 'Team Leader' && task.user.userName !== userData.userName) {
+        return toast({
+          title: 'Error!',
+          description: 'No tienes los permisos para esta accion',
+          status: 'error',
+          duration: 2500,
+          position: 'top-right',
+          isClosable: true
+        })
+      }
+
       const resp = await tasksApi.patch(`/task/${task._id}`, {
         task: {
           title: values.title,
@@ -103,13 +115,25 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                   <Box fontSize={16} p={1} rounded="md" width="100%">
                     <FormControl>
                       <Flex direction="column" gap={4}>
-                        <Field as={CustomInputComponent} name="title" placeholder="Título" type="text" />
+                        <Field
+                          as={CustomInputComponent}
+                          isDisabled={userData.role !== 'Team Leader' && task.user.userName !== userData.userName}
+                          name="title"
+                          placeholder="Título"
+                          type="text"
+                        />
                         {errors.title && touched.title && (
                           <Box className="error">
                             <Text color="tomato">{errors.title}</Text>
                           </Box>
                         )}
-                        <Field as={Select} borderRadius="8px" name="status" placeholder="Selecciona un estado">
+                        <Field
+                          as={Select}
+                          borderRadius="8px"
+                          isDisabled={userData.role !== 'Team Leader' && task.user.userName !== userData.userName}
+                          name="status"
+                          placeholder="Selecciona un estado"
+                        >
                           {!!inputData
                             ? inputData.status.map((status) => (
                                 <option key={status} value={status}>
@@ -124,7 +148,13 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                             <Text color="tomato">{errors.status}</Text>
                           </Box>
                         )}
-                        <Field as={Select} borderRadius="8px" name="priority" placeholder="Selecciona una prioridad">
+                        <Field
+                          as={Select}
+                          borderRadius="8px"
+                          isDisabled={userData.role !== 'Team Leader' && task.user.userName !== userData.userName}
+                          name="priority"
+                          placeholder="Selecciona una prioridad"
+                        >
                           {!!inputData
                             ? inputData.importance.map((imp) => (
                                 <option key={imp} value={imp}>
@@ -138,7 +168,15 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                             <Text color="tomato">{errors.priority}</Text>
                           </Box>
                         )}
-                        <Field as={Textarea} h={140} mt={4} name="description" placeholder="Descripción" type="text" />
+                        <Field
+                          as={Textarea}
+                          h={140}
+                          isDisabled={userData.role !== 'Team Leader' && task.user.userName !== userData.userName}
+                          mt={4}
+                          name="description"
+                          placeholder="Descripción"
+                          type="text"
+                        />
                         {errors.description && touched.description && (
                           <Box className="error" pt={2}>
                             <Text color="tomato">{errors.description}</Text>
@@ -150,7 +188,12 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                 </ModalBody>
 
                 <ModalFooter gap={4} justifyContent="end">
-                  <Button size="sm" type="submit" variant="primary">
+                  <Button
+                    disabled={userData.role !== 'Team Leader' && task.user.userName !== userData.userName}
+                    size="sm"
+                    type="submit"
+                    variant="primary"
+                  >
                     Guardar
                   </Button>
                   <Button size="sm" variant="secondary" onClick={onClose}>
