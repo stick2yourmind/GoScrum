@@ -1,10 +1,9 @@
-# <span style="display: flex; justify-content: center; align-items: center; gap: 30px;">GoScrum</span>
+# <center>GoScrum</center>
 
-<span style="text-align: center" >
-<p>An application whose purpose is to make possible the implementation of "Scrum", as an agile methodology, in different work groups.</p>
-<p>This is possible thanks to the fact that the application allows the creation of teams, which each user can join by opting for a "Team Leader" or "Team Member" role.</p>
-</span>
-
+<center> 
+An application whose purpose is to make possible the implementation of "Scrum", as an agile methodology, in different work groups.
+This is possible thanks to the fact that the application allows the creation of teams, which each user can join by opting for a "Team Leader" or "Team Member" role.
+</center>
 ## Key features
 
 - 🌙​ Dark mode.
@@ -28,11 +27,11 @@
 
 - Ligth mode
 
-![Login form](src/assets/Login-Dark.png)
+![Login form](src/assets/Login.png)
 
 - Dark mode
 
-![Login form](src/assets/Login.png)
+![Login form](src/assets/Login-Dark.png)
 
 ### Home screen
 
@@ -99,6 +98,6 @@ To run the project locally (after cloning it):
 npm run dev
 ```
 
-<span style="display: flex; justify-content: center; margin-top: 40px">
+<center>
 <img src='src/assets/GoScrum.png' height="20" />
-</span>
+</center>
