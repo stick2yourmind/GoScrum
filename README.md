@@ -1,4 +1,4 @@
-# <center>GoScrum</center>
+<h1 align="center">GoScrum</h1>
 
 <center> 
 An application whose purpose is to help the implementation of "Scrum", as an agile methodology, providing a kanban board with drag and drop functionality.
