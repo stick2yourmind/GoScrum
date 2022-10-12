@@ -4,6 +4,7 @@
 An application whose purpose is to make possible the implementation of "Scrum", as an agile methodology, in different work groups.
 This is possible thanks to the fact that the application allows the creation of teams, which each user can join by opting for a "Team Leader" or "Team Member" role.
 </center>
+
 ## Key features
 
 - 🌙​ Dark mode.
