@@ -1,11 +1,12 @@
-import { Stack, Text, Button, Heading, Container, useDisclosure, useToast } from '@chakra-ui/react'
-import * as dayjs from 'dayjs'
-import timeZonePlugin from 'dayjs-ext/plugin/timeZone'
+import { Stack, Text, Button, Heading, Container, useDisclosure, useToast, useColorMode } from '@chakra-ui/react'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timeZonePlugin from 'dayjs/plugin/timezone'
 import { useDrag } from 'react-dnd'
 import { useDispatch } from 'react-redux'
 
 import tasksApi from '../../api/tasksApi'
-import { startGetUserTasks } from '../../store/slices/tasksSlice'
+import { deleteTask, editTaskStatus } from '../../store/slices/tasksSlice'
 import { TaskEditModal } from '../TaskEditModal/TaskEditModal'
 
 import Finished from './Badges/Finished'
@@ -15,10 +16,14 @@ import Low from './Badges/Low'
 import Medium from './Badges/Medium'
 import New from './Badges/New'
 
+dayjs.extend(utc)
+dayjs.extend(timeZonePlugin)
+
 const Card = ({ task }) => {
   const dispatch = useDispatch()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast()
+  const { colorMode } = useColorMode()
 
   const [{ isDragging }, drag] = useDrag(() => ({
     type: `card_${task.status}`,
@@ -71,8 +76,6 @@ const Card = ({ task }) => {
     })
   }))
 
-  dayjs.extend(timeZonePlugin)
-
   const modifyTaskStatus = async (id, title, importance, status, description) => {
     try {
       const resp = await tasksApi.patch(`/task/${id}`, {
@@ -85,7 +88,12 @@ const Card = ({ task }) => {
       })
 
       if (resp.status === 200) {
-        dispatch(startGetUserTasks())
+        dispatch(
+          editTaskStatus({
+            id,
+            status
+          })
+        )
       }
     } catch (error) {
       toast({
@@ -99,12 +107,12 @@ const Card = ({ task }) => {
     }
   }
 
-  const deleteTask = async (id) => {
+  const onDelete = async (id) => {
     try {
       const resp = await tasksApi.delete(`/task/${id}`)
 
       if (resp.status === 200) {
-        dispatch(startGetUserTasks())
+        dispatch(deleteTask({ id }))
       }
 
       toast({
@@ -131,8 +139,8 @@ const Card = ({ task }) => {
     <>
       <Container
         ref={drag}
-        bgColor="#FAFAFA"
-        borderColor="gray.300"
+        bgColor={colorMode === 'light' ? '#FAFAFA' : 'gray.900'}
+        borderColor={colorMode === 'light' ? 'gray.300' : 'teal.500'}
         borderWidth="1px"
         flex={1}
         mt={2}
@@ -143,7 +151,7 @@ const Card = ({ task }) => {
       >
         <Stack align="center" direction="row" justify="space-between">
           <Heading fontSize="15px">{task.title}</Heading>
-          <Button size="xs" onClick={() => deleteTask(task._id)}>
+          <Button size="xs" variant="primary" width="10px" onClick={() => onDelete(task._id)}>
             X
           </Button>
         </Stack>
@@ -162,16 +170,7 @@ const Card = ({ task }) => {
           {task.importance === 'LOW' && <Low />}
         </Stack>
         <Text my={2}>{task.description}</Text>
-        <Button
-          _hover={{ color: 'primary.100', borderColor: 'primary.100', bg: 'white' }}
-          bg="primary.100"
-          borderColor="primary.100"
-          borderWidth={1}
-          color="white"
-          fontWeight="bold"
-          size="xs"
-          onClick={onOpen}
-        >
+        <Button fontWeight="bold" size="xs" variant="primary" width="60px" onClick={onOpen}>
           Ver mas
         </Button>
       </Container>

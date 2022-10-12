@@ -21,7 +21,7 @@ import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import tasksApi from '../../api/tasksApi'
-import { startGetUserTasks } from '../../store/slices/tasksSlice'
+import { editTask } from '../../store/slices/tasksSlice'
 import { TaskSchema } from '../../utils/schema/taskForm'
 
 const CustomInputComponent = (props) => (
@@ -46,7 +46,15 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
       })
 
       if (resp.status === 200) {
-        dispatch(startGetUserTasks())
+        dispatch(
+          editTask({
+            id: task._id,
+            title: values.title,
+            importance: values.priority,
+            status: values.status,
+            description: values.description
+          })
+        )
         onClose()
       }
 
@@ -142,36 +150,10 @@ export const TaskEditModal = ({ isOpen, onClose, task }) => {
                 </ModalBody>
 
                 <ModalFooter gap={4} justifyContent="end">
-                  <Button
-                    _hover={{
-                      bg: 'background.300',
-                      color: 'primary.100',
-                      borderColor: 'primary.100',
-                      border: '2px'
-                    }}
-                    bg="primary.100"
-                    border="2px"
-                    borderColor="primary.100"
-                    color="background.300"
-                    size="sm"
-                    type="submit"
-                  >
+                  <Button size="sm" type="submit" variant="primary">
                     Guardar
                   </Button>
-                  <Button
-                    _hover={{
-                      bg: 'background.300',
-                      color: 'error.100',
-                      borderColor: 'error.100',
-                      border: '2px'
-                    }}
-                    bg="error.100"
-                    border="2px"
-                    borderColor="primary.100"
-                    color="background.300"
-                    size="sm"
-                    onClick={onClose}
-                  >
+                  <Button size="sm" variant="secondary" onClick={onClose}>
                     Cancelar
                   </Button>
                 </ModalFooter>

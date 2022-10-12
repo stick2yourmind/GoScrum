@@ -30,11 +30,14 @@ const authSlice = createSlice({
     },
     setStatus: (state, action) => {
       state.status = action.payload
+    },
+    finishLoading: (state) => {
+      state.loading = false
     }
   }
 })
 
-export const { setRegisterData, setUserData, startLoading, setError, setStatus } = authSlice.actions
+export const { setRegisterData, setUserData, startLoading, setError, setStatus, finishLoading } = authSlice.actions
 
 export default authSlice.reducer
 
