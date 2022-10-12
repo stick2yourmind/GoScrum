@@ -99,6 +99,6 @@ To run the project locally (after cloning it):
 npm run dev
 ```
 
-<center>
+<span style="display: flex; justify-content: center" >
 <img src='src/assets/GoScrum.png' height="20" />
 </center>
