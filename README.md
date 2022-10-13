@@ -1,6 +1,6 @@
 <h1 align="center">GoScrum</h1>
 
-<p align="center"> 
+<p align="center">
 An application whose purpose is to help the implementation of "Scrum", as an agile methodology, providing a kanban board with drag and drop functionality.
 This is possible thanks to the fact that the application allows the creation of teams, which each user can join by opting for a "Team Leader" or "Team Member" role.
 </p>
